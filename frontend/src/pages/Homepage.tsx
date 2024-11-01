@@ -1,7 +1,10 @@
 import { Box, Typography, Button } from "@mui/material";
 import "../styles.css";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
   return (
     <Box
       sx={{
@@ -145,6 +148,7 @@ const HomePage = () => {
       </Box>
       <Box display="flex" justifyContent="center">
         <Button
+          onClick={() => navigate("/landing")}
           variant="contained"
           sx={{
             backgroundColor: "rgb(252,6,106)",
