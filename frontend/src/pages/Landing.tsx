@@ -80,6 +80,87 @@ const Landing = () => {
           </Box>
         </Box>
       </Box>
+      <Box
+        margin="20px 250px"
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          gap: "10px",
+        }}
+      >
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: "rgb(252,6,106)",
+            color: "#fff",
+            borderRadius: "1000px",
+            fontSize: "1.4rem",
+            textTransform: "none",
+          }}
+        >
+          Listen to the latest updates
+        </Button>
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: "rgb(252,6,106)",
+            color: "#fff",
+            borderRadius: "1000px",
+            fontSize: "1.4rem",
+            textTransform: "none",
+          }}
+        >
+          Discover global news
+        </Button>
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: "rgb(252,6,106)",
+            color: "#fff",
+            borderRadius: "1000px",
+            fontSize: "1.4rem",
+            textTransform: "none",
+          }}
+        >
+          Latest economy updates
+        </Button>
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: "rgb(252,6,106)",
+            color: "#fff",
+            borderRadius: "1000px",
+            fontSize: "1.4rem",
+            textTransform: "none",
+          }}
+        >
+          Explore sports news
+        </Button>
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: "rgb(252,6,106)",
+            color: "#fff",
+            borderRadius: "1000px",
+            fontSize: "1.4rem",
+            textTransform: "none",
+          }}
+        >
+          Discover cultural insights
+        </Button>
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: "rgb(252,6,106)",
+            color: "#fff",
+            borderRadius: "1000px",
+            fontSize: "1.4rem",
+            textTransform: "none",
+          }}
+        >
+          Explore wellness tips
+        </Button>
+      </Box>
     </Box>
   );
 };
