@@ -9,8 +9,10 @@ import {
 } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 const Landing = () => {
+  const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -20,15 +22,25 @@ const Landing = () => {
         bgcolor: "#f9f9f9",
       }}
     >
-      <Box>
+      <Box
+        sx={{
+          position: "sticky",
+          top: 0,
+          width: "100%",
+          borderBottom: "2px solid #e0e0e0",
+          bgcolor: "#fff",
+          zIndex: 10,
+          paddingY: "10px",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
         <Box
-          position="relative"
-          width="100%"
-          borderBottom="2px solid #e0e0e0"
-          paddingY="10px"
-          bgcolor="#fff"
           display="flex"
-          justifyContent="center"
+          justifyContent="space-between"
+          width="100%"
+          maxWidth="1200px"
+          padding="0 20px"
         >
           <Box
             display="flex"
@@ -79,7 +91,13 @@ const Landing = () => {
               color="rgb(252,6,106)"
             >
               <Typography fontSize="1.2rem">Trang Chủ</Typography>
-              <Typography fontSize="1.2rem">Tin tức</Typography>
+              <Typography
+                fontSize="1.2rem"
+                onClick={() => navigate("/news")}
+                sx={{ cursor: "pointer" }}
+              >
+                Tin tức
+              </Typography>
               <Typography fontSize="1.2rem">Sách</Typography>
             </Box>
           </Box>
@@ -249,7 +267,8 @@ const Landing = () => {
           <Typography
             variant="body2"
             color="text.secondary"
-            style={{ cursor: "pointer" }}
+            onClick={() => navigate("/news")}
+            sx={{ cursor: "pointer" }}
           >
             Thêm
           </Typography>

@@ -1,6 +1,14 @@
-import { Box, Typography, Button } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  InputAdornment,
+  TextField,
+} from "@mui/material";
 import "../styles.css";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -14,39 +22,74 @@ const HomePage = () => {
       }}
     >
       <Box sx={{ flex: 1 }}>
-        <Box
-          position="relative"
-          width="100vw"
-          borderBottom="2px solid #e0e0e0"
-          paddingY="10px"
-          bgcolor="#fff"
-          display="flex"
-          justifyContent="center"
-        >
+        <Box>
           <Box
-            display="flex"
-            justifyContent="space-between"
+            position="relative"
             width="100%"
-            margin="0 40px"
+            borderBottom="2px solid #e0e0e0"
+            paddingY="10px"
+            bgcolor="#fff"
+            display="flex"
+            justifyContent="center"
           >
-            <Typography
-              fontSize="1.6rem"
-              fontWeight="600"
-              display="flex"
-              alignItems="center"
-            >
-              ListenVision
-            </Typography>
             <Box
               display="flex"
-              justifyContent="center"
-              alignItems="center"
-              gap="20px"
-              color="rgb(252,6,106)"
+              justifyContent="space-between"
+              width="100%"
+              maxWidth="1200px"
+              padding="0 20px"
             >
-              <Typography fontSize="1.2rem">Trang Chủ</Typography>
-              <Typography fontSize="1.2rem">Tin tức</Typography>
-              <Typography fontSize="1.2rem">Sách</Typography>
+              <Typography
+                fontSize="1.6rem"
+                fontWeight="600"
+                display="flex"
+                alignItems="center"
+                color="rgb(252,6,106)"
+              >
+                ListenVision
+              </Typography>
+              <Box>
+                <TextField
+                  placeholder="Search for audio news and articles"
+                  variant="outlined"
+                  style={{
+                    borderRadius: "100px",
+                    width: "450px",
+                  }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <FontAwesomeIcon
+                          icon={faMagnifyingGlass}
+                          style={{ cursor: "pointer", color: "#888" }}
+                        />
+                      </InputAdornment>
+                    ),
+                  }}
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: "50px",
+                    },
+                  }}
+                />
+              </Box>
+              <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                gap="30px"
+                color="rgb(252,6,106)"
+              >
+                <Typography fontSize="1.2rem">Trang Chủ</Typography>
+                <Typography
+                  fontSize="1.2rem"
+                  onClick={() => navigate("/news")}
+                  sx={{ cursor: "pointer" }}
+                >
+                  Tin tức
+                </Typography>
+                <Typography fontSize="1.2rem">Sách</Typography>
+              </Box>
             </Box>
           </Box>
         </Box>
