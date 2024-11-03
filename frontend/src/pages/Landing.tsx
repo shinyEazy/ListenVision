@@ -4,6 +4,8 @@ import {
   Button,
   TextField,
   InputAdornment,
+  Card,
+  CardMedia,
 } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
@@ -18,7 +20,6 @@ const Landing = () => {
         bgcolor: "#f9f9f9",
       }}
     >
-      {/* Header */}
       <Box>
         <Box
           position="relative"
@@ -85,7 +86,6 @@ const Landing = () => {
         </Box>
       </Box>
 
-      {/* Button Grid */}
       <Box
         padding="20px 0"
         display="grid"
@@ -124,7 +124,6 @@ const Landing = () => {
         ))}
       </Box>
 
-      {/* Content Boxes */}
       <Box
         display="flex"
         flexDirection={{ xs: "column", md: "row" }}
@@ -242,6 +241,66 @@ const Landing = () => {
               </Typography>
             </Box>
           </Box>
+        </Box>
+      </Box>
+      <Box margin="40px" display="flex" flexDirection="column" gap="20px">
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Typography variant="h5" fontWeight="bold" color="rgb(252,6,106)">
+            Thế giới
+          </Typography>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            style={{ cursor: "pointer" }}
+          >
+            Thêm
+          </Typography>
+        </Box>
+
+        <Box
+          display="grid"
+          gridTemplateColumns="repeat(auto-fit, minmax(300px, 1fr))"
+          gap="20px"
+        >
+          {[...Array(4)].map((_, index) => (
+            <Card
+              key={index}
+              sx={{ padding: "16px", borderRadius: "12px", boxShadow: 2 }}
+            >
+              <CardMedia
+                component="img"
+                height="180"
+                image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBhRJVndSAQKMvCXj6Nv8LqkVw4X_DCNpT_bjRegXSEORcqdyK"
+                alt="News thumbnail"
+                sx={{ borderRadius: "8px", mb: 2 }}
+              />
+              <Typography variant="h6" fontWeight="bold" mb={1}>
+                Ukraine rút quân vội vàng, Nga giành khu vực dài 20km trong 24
+                giờ
+              </Typography>
+              <Typography variant="body2" color="text.secondary" mb={2}>
+                bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
+                bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
+                bla bla
+              </Typography>
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: "rgb(252,6,106)",
+                  color: "#fff",
+                  borderRadius: "30px",
+                  fontSize: "1rem",
+                  paddingY: "8px",
+                  textTransform: "none",
+                  "&:hover": {
+                    backgroundColor: "rgb(220,5,90)",
+                  },
+                }}
+              >
+                Nghe
+              </Button>
+            </Card>
+          ))}
         </Box>
       </Box>
     </Box>
