@@ -45,6 +45,8 @@ const HomePage = () => {
                 display="flex"
                 alignItems="center"
                 color="rgb(252,6,106)"
+                onClick={() => navigate("/")}
+                sx={{ cursor: "pointer" }}
               >
                 ListenVision
               </Typography>
@@ -80,7 +82,13 @@ const HomePage = () => {
                 gap="30px"
                 color="rgb(252,6,106)"
               >
-                <Typography fontSize="1.2rem">Trang Chủ</Typography>
+                <Typography
+                  fontSize="1.2rem"
+                  onClick={() => navigate("/landing")}
+                  sx={{ cursor: "pointer" }}
+                >
+                  Trang Chủ
+                </Typography>
                 <Typography
                   fontSize="1.2rem"
                   onClick={() => navigate("/news")}
@@ -240,7 +248,10 @@ const HomePage = () => {
                 width: "32px",
               }}
             >
-              <img src="https://uiparadox.co.uk/public/templates/flynow/v2/assets/media/icons/facebook.png"></img>
+              <img
+                src="https://uiparadox.co.uk/public/templates/flynow/v2/assets/media/icons/facebook.png"
+                alt="Podcast thumbnail"
+              ></img>
             </Button>
             <Button
               variant="contained"
@@ -255,7 +266,10 @@ const HomePage = () => {
                 width: "32px",
               }}
             >
-              <img src="https://uiparadox.co.uk/public/templates/flynow/v2/assets/media/icons/twitter.png"></img>
+              <img
+                src="https://uiparadox.co.uk/public/templates/flynow/v2/assets/media/icons/twitter.png"
+                alt="Podcast thumbnail"
+              ></img>
             </Button>
             <Button
               variant="contained"
@@ -270,7 +284,10 @@ const HomePage = () => {
                 width: "32px",
               }}
             >
-              <img src="https://uiparadox.co.uk/public/templates/flynow/v2/assets/media/icons/instagram.png"></img>
+              <img
+                src="https://uiparadox.co.uk/public/templates/flynow/v2/assets/media/icons/instagram.png"
+                alt="Podcast thumbnail"
+              ></img>
             </Button>
           </Box>
         </Box>
