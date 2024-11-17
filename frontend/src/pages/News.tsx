@@ -107,7 +107,13 @@ const News = () => {
               >
                 Tin tức
               </Typography>
-              <Typography fontSize="1.2rem">Sách</Typography>
+              <Typography
+                fontSize="1.2rem"
+                onClick={() => navigate("/books")}
+                sx={{ cursor: "pointer" }}
+              >
+                Sách
+              </Typography>
             </Box>
           </Box>
         </Box>

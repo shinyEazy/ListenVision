@@ -1,4 +1,15 @@
-import { Box, Typography, TextField, InputAdornment,Card, CardContent, CardMedia , AppBar, Toolbar, Button} from "@mui/material";
+import {
+  Box,
+  Typography,
+  TextField,
+  InputAdornment,
+  Card,
+  CardContent,
+  CardMedia,
+  AppBar,
+  Toolbar,
+  Button,
+} from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
@@ -9,35 +20,50 @@ const Books = () => {
     {
       title: "Cuốn sách hay 1",
       author: "Tác giả 1",
-      image: "https://muagitot.com/upload_images/images/2022/03/29/acbb422fb3f47ffc8fa77f9424479c48.jpg?w=1130",
+      image:
+        "https://muagitot.com/upload_images/images/2022/03/29/acbb422fb3f47ffc8fa77f9424479c48.jpg?w=1130",
       description: "Đây là một cuốn sách hay về chủ đề ...",
     },
     {
       title: "Cuốn sách hay 2",
       author: "Tác giả 2",
-      image: "https://www.elle.vn/wp-content/uploads/2021/07/15/442832/1-sach-hay-song-cham.jpg",
+      image:
+        "https://www.elle.vn/wp-content/uploads/2021/07/15/442832/1-sach-hay-song-cham.jpg",
       description: "Cuốn sách này giúp bạn hiểu rõ hơn về ...",
     },
     {
       title: "Cuốn sách hay 3",
       author: "Tác giả 3",
-      image: "https://www.elle.vn/wp-content/uploads/2021/07/15/442832/1-sach-hay-song-cham.jpg",
+      image:
+        "https://www.elle.vn/wp-content/uploads/2021/07/15/442832/1-sach-hay-song-cham.jpg",
       description: "Một cuốn sách thú vị khám phá về ...",
     },
     {
       title: "Cuốn sách hay 3",
       author: "Tác giả 3",
-      image: "https://www.elle.vn/wp-content/uploads/2021/07/15/442832/1-sach-hay-song-cham.jpg",
+      image:
+        "https://www.elle.vn/wp-content/uploads/2021/07/15/442832/1-sach-hay-song-cham.jpg",
       description: "Một cuốn sách thú vị khám phá về ...",
     },
     {
       title: "Cuốn sách hay 3",
       author: "Tác giả 3",
-      image: "https://www.elle.vn/wp-content/uploads/2021/07/15/442832/1-sach-hay-song-cham.jpg",
+      image:
+        "https://www.elle.vn/wp-content/uploads/2021/07/15/442832/1-sach-hay-song-cham.jpg",
       description: "Một cuốn sách thú vị khám phá về ...",
     },
   ];
-  const genres = ["Văn học", "Khoa học", "Lịch sử", "Tâm lý", "Công nghệ", "Trinh thám", "Sức khỏe", "Giáo dục", "Thiếu nhi"];
+  const genres = [
+    "Văn học",
+    "Khoa học",
+    "Lịch sử",
+    "Tâm lý",
+    "Công nghệ",
+    "Trinh thám",
+    "Sức khỏe",
+    "Giáo dục",
+    "Thiếu nhi",
+  ];
 
   return (
     <Box>
@@ -125,19 +151,35 @@ const Books = () => {
               >
                 Tin tức
               </Typography>
-              <Typography fontSize="1.2rem" onClick={() => navigate("/books")} sx={{cursor: "pointer"}}>Sách</Typography>
+              <Typography
+                fontSize="1.2rem"
+                onClick={() => navigate("/books")}
+                sx={{ cursor: "pointer" }}
+              >
+                Sách
+              </Typography>
             </Box>
           </Box>
         </Box>
-      </Box> 
+      </Box>
       <AppBar position="static" color="primary">
         <Toolbar sx={{ justifyContent: "space-between" }}>
-          <Typography variant="h6" component="div" sx={{ color: "rgb(252,6,106)" }}>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ color: "rgb(252,6,106)" }}
+          >
             Thể loại Sách
           </Typography>
-          <Box sx={{ display: "flex", flex: 1, justifyContent: "space-evenly" }}>
+          <Box
+            sx={{ display: "flex", flex: 1, justifyContent: "space-evenly" }}
+          >
             {genres.map((genre, index) => (
-              <Button key={index} color="inherit" sx={{ flex: 1, textAlign: "center" }}>
+              <Button
+                key={index}
+                color="inherit"
+                sx={{ flex: 1, textAlign: "center" }}
+              >
                 {genre}
               </Button>
             ))}
@@ -145,14 +187,20 @@ const Books = () => {
         </Toolbar>
       </AppBar>
       <Box sx={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}>
-        <Typography variant="h4" component="h1" sx={{ marginBottom: "20px", color: "#333" }}>
+        <Typography
+          variant="h4"
+          component="h1"
+          sx={{ marginBottom: "20px", color: "#333" }}
+        >
           Danh sách Sách
         </Typography>
-        <Box sx={{
+        <Box
+          sx={{
             display: "grid",
             gridTemplateColumns: "repeat(4, 1fr)",
-            gap: "20px"
-          }}>
+            gap: "20px",
+          }}
+        >
           {booksData.map((book, index) => (
             <Card key={index} sx={{ width: "300px" }}>
               <CardMedia
@@ -168,17 +216,21 @@ const Books = () => {
                 <Typography variant="body2" color="text.secondary">
                   {book.author}
                 </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ marginTop: "10px" }}>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ marginTop: "10px" }}
+                >
                   {book.description}
                 </Typography>
               </CardContent>
-              <Button 
-                variant="contained" 
-                color="error" 
-                sx={{ 
-                  position: "relative", 
-                  bottom: "10px", 
-                  left: "10px" 
+              <Button
+                variant="contained"
+                color="error"
+                sx={{
+                  position: "relative",
+                  bottom: "10px",
+                  left: "10px",
                 }}
               >
                 Đọc Sách
