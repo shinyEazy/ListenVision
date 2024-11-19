@@ -47,10 +47,10 @@ const News = () => {
           </Typography>
         </Box>
         <Box
-          display="grid"
+          display="flex"
           gridTemplateColumns={`repeat(auto-fit, minmax(300px, 1fr))`}
           gap="20px"
-          justifyContent={filteredNews.length < 4 ? "center" : "start"}
+          justifyContent={filteredNews.length < 4 ? "center" : "space-between"}
         >
           {filteredNews.map((news) => (
             <Card
@@ -146,7 +146,7 @@ const News = () => {
     >
       <Header />
       {/* Render News Sections */}
-      {["Thời sự", "Thế giới", "Kinh tế", "Thể thao"].map((category) =>
+      {["Thời sự", "Thế giới", "Kinh tế"].map((category) =>
         renderNewsByCategory(category)
       )}
       <Footer />
