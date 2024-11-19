@@ -7,6 +7,7 @@ import {
   ListItem,
   ListItemText,
   Divider,
+  Link,
 } from "@mui/material";
 import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
@@ -20,6 +21,10 @@ import Footer from "../components/Footer";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClock } from "@fortawesome/free-regular-svg-icons";
+import { faCirclePlay } from "@fortawesome/free-solid-svg-icons";
 
 interface Part {
   part_id: number;
@@ -39,6 +44,7 @@ interface NewBook {
 }
 
 const BookPage = () => {
+  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [newBook, setNewBook] = useState<NewBook | null>(null);
   const [relatedNews, setRelatedNews] = useState<NewBook[]>([]);
@@ -82,7 +88,6 @@ const BookPage = () => {
   return (
     <Box>
       <Header />
-
       {/* Book Main Section */}
       <Box
         sx={{
@@ -95,7 +100,7 @@ const BookPage = () => {
           sx={{
             display: "flex",
             gap: "20px",
-            alignItems: "flex-start",
+            alignItems: "center",
             justifyContent: "space-between",
             maxWidth: "1200px",
             margin: "0 auto",
@@ -113,58 +118,94 @@ const BookPage = () => {
               height: "300px",
             }}
           />
-
           {/* Book Info */}
-          <Box sx={{ flex: 1 }}>
+          <Box sx={{ flex: 1 }} marginLeft="40px">
             <Typography variant="h4" fontWeight="bold">
               {newBook?.title || "Loading..."}
             </Typography>
-            <Typography variant="subtitle1" sx={{ margin: "10px 0" }}>
-              Trang chủ / Thể loại / {newBook?.category || ""}
+            <Typography
+              variant="subtitle1"
+              sx={{
+                margin: "10px 0",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+              }}
+            >
+              <Typography
+                onClick={() => navigate("/")}
+                sx={{ cursor: "pointer" }}
+              >
+                Trang chủ
+              </Typography>
+              <Typography>/</Typography>
+              <Typography
+                onClick={() => navigate("/")}
+                sx={{ cursor: "pointer" }}
+              >
+                {newBook?.category || ""}
+              </Typography>
             </Typography>
-            <Typography variant="subtitle2">⏱️ 4 giờ 1 phút</Typography>
+
+            <Typography variant="subtitle2" display="flex" alignItems="center">
+              <FontAwesomeIcon
+                icon={faClock}
+                style={{ fontSize: "1.1rem", marginRight: "8px" }}
+              />{" "}
+              4 giờ 1 phút
+            </Typography>
 
             {/* Buttons */}
             <Box sx={{ margin: "20px 0", display: "flex", gap: "20px" }}>
               <Button
                 variant="contained"
                 sx={{
-                  backgroundColor: "goldenrod",
+                  padding: "8px 20px",
+                  display: "flex",
+                  alignItems: "center",
+                  backgroundColor: "rgb(180,83,9)",
                   color: "#fff",
                   textTransform: "none",
                   fontWeight: "bold",
+                  fontSize: "1.1rem",
+                  gap: "8px",
+                  borderRadius: "100px",
                   "&:hover": {
-                    backgroundColor: "darkgoldenrod",
+                    backgroundColor: "rgb(217,119,6)",
                   },
                 }}
               >
+                <FontAwesomeIcon
+                  icon={faCirclePlay}
+                  style={{ fontSize: "1.4rem" }}
+                />
                 Nghe sách
               </Button>
-              <Button
-                variant="outlined"
-                sx={{ color: "#fff", borderColor: "#fff" }}
-              >
-                Phát lại
-              </Button>
-              <Button
-                variant="outlined"
-                sx={{ color: "#fff", borderColor: "#fff" }}
-              >
-                Phát tiếp
-              </Button>
             </Box>
-
             {/* Bookmark and Favorite */}
             <Box sx={{ display: "flex", gap: "15px" }}>
-              <IconButton sx={{ color: "#fff" }}>
+              <IconButton
+                sx={{
+                  color: "#fff",
+                  border: "1px solid white",
+                  borderRadius: "8px",
+                  padding: "8px",
+                }}
+              >
                 <BookmarkBorderIcon />
               </IconButton>
-              <IconButton sx={{ color: "#fff" }}>
+              <IconButton
+                sx={{
+                  color: "#fff",
+                  border: "1px solid white",
+                  borderRadius: "8px",
+                  padding: "8px",
+                }}
+              >
                 <FavoriteBorderIcon />
               </IconButton>
             </Box>
           </Box>
-
           {/* Chapters List */}
           <Box
             sx={{
@@ -195,8 +236,6 @@ const BookPage = () => {
           </Box>
         </Box>
       </Box>
-
-      {/* Description Section */}
       {/* Description Section */}
       <Box sx={{ maxWidth: "1200px", margin: "20px auto", padding: "20px" }}>
         <Typography
@@ -210,7 +249,6 @@ const BookPage = () => {
           {description.join("\n\n") || "No description available."}
         </Typography>
       </Box>
-
       {/* Audio Player */}
       <Box
         sx={{
@@ -240,7 +278,6 @@ const BookPage = () => {
             </Typography>
           </Box>
         </Box>
-
         {/* Audio Controls */}
         <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <IconButton sx={{ color: "#fff" }}>
@@ -253,12 +290,10 @@ const BookPage = () => {
             <SkipNextIcon />
           </IconButton>
         </Box>
-
         <Typography variant="body2" color="gray">
           00:12 / 28:15
         </Typography>
       </Box>
-
       <Footer />
     </Box>
   );
