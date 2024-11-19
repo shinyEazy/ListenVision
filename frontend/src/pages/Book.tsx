@@ -6,10 +6,7 @@ import {
   List,
   ListItem,
   ListItemText,
-  Divider,
-  Link,
 } from "@mui/material";
-import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
@@ -47,7 +44,7 @@ const BookPage = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [newBook, setNewBook] = useState<NewBook | null>(null);
-  const [relatedNews, setRelatedNews] = useState<NewBook[]>([]);
+  const [relatedBooks, setRelatedBooks] = useState<NewBook[]>([]);
   const [loading, setLoading] = useState(true);
 
   const [isPlaying, setIsPlaying] = useState(false);
@@ -69,8 +66,8 @@ const BookPage = () => {
             (news) =>
               news.category === foundBook?.category && news.id !== Number(id)
           )
-          .slice(0, 4);
-        setRelatedNews(related);
+          .slice(0, 2);
+        setRelatedBooks(related);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -275,17 +272,89 @@ const BookPage = () => {
         </Box>
       </Box>
       {/* Description Section */}
-      <Box sx={{ maxWidth: "1200px", margin: "20px auto", padding: "20px" }}>
-        <Typography
-          variant="h6"
-          fontWeight="bold"
-          sx={{ marginBottom: "10px" }}
-        >
-          Giới thiệu nội dung
-        </Typography>
-        <Typography variant="body1" sx={{ whiteSpace: "pre-line" }}>
-          {description.join("\n\n") || "No description available."}
-        </Typography>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        sx={{
+          margin: "40px auto",
+          maxWidth: "1200px",
+        }}
+      >
+        <Box sx={{ maxWidth: "1000px" }}>
+          <Typography
+            variant="h6"
+            fontWeight="bold"
+            sx={{ marginBottom: "10px" }}
+          >
+            Giới thiệu nội dung
+          </Typography>
+          <Typography fontSize="1.3rem" sx={{ whiteSpace: "pre-line" }}>
+            {description.join("\n\n") || "No description available."}
+          </Typography>
+        </Box>
+        <Box>
+          <Typography
+            variant="h6"
+            fontWeight="bold"
+            sx={{ marginBottom: "10px" }}
+          >
+            Sách nói tương tự
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "20px",
+            }}
+          >
+            {relatedBooks.map((book) => (
+              <Box
+                key={book.id}
+                sx={{
+                  width: "150px",
+                  cursor: "pointer",
+                  textAlign: "center",
+                  color: "#000",
+                  "&:hover img": {
+                    transform: "scale(1.05)",
+                  },
+                }}
+                onClick={() => navigate(`/book/${book.id}`)}
+              >
+                <Box
+                  component="img"
+                  src={book.image || "https://via.placeholder.com/150x200"}
+                  alt={book.title}
+                  sx={{
+                    width: "100%",
+                    height: "200px",
+                    objectFit: "cover",
+                    borderRadius: "8px",
+                    transition: "transform 0.3s ease-in-out",
+                    boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+                  }}
+                />
+                <Typography
+                  fontSize="1.1rem"
+                  sx={{
+                    fontWeight: "bold",
+                    marginTop: "10px",
+                    textAlign: "start",
+                  }}
+                >
+                  {book.title}
+                </Typography>
+                <Typography
+                  variant="body1"
+                  color="textSecondary"
+                  sx={{ textAlign: "start" }}
+                >
+                  {book.author}
+                </Typography>
+              </Box>
+            ))}
+          </Box>
+        </Box>
       </Box>
       {/* Audio Player */}
       <Box
