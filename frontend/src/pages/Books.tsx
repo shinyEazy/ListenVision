@@ -1,14 +1,8 @@
-import {
-  Box,
-  Typography,
-  Card,
-  CardContent,
-  CardMedia,
-  Button,
-} from "@mui/material";
+import { Box, Typography, Card, CardMedia, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { useNavigate } from "react-router-dom";
 
 interface Book {
   id: number;
@@ -19,6 +13,8 @@ interface Book {
 }
 
 const Books = () => {
+  const navigate = useNavigate();
+
   const [booksData, setBooksData] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -26,7 +22,7 @@ const Books = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await fetch("/data/books.json"); // Adjust the path based on your public folder structure
+        const response = await fetch("/data/books.json");
         if (!response.ok) throw new Error("Failed to load books data");
         const data: Book[] = await response.json();
         setBooksData(data);
@@ -55,7 +51,6 @@ const Books = () => {
   return (
     <Box>
       <Header />
-
       {/* Genre Bar */}
       <Box
         sx={{
@@ -91,7 +86,6 @@ const Books = () => {
           </Button>
         ))}
       </Box>
-
       {/* Book Section */}
       <Box sx={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}>
         <Typography
@@ -103,10 +97,8 @@ const Books = () => {
         >
           Sách nói mới nhất
         </Typography>
-
         {loading && <Typography>Loading...</Typography>}
         {error && <Typography color="error">{error}</Typography>}
-
         {!loading && !error && (
           <Box
             sx={{
@@ -187,7 +179,7 @@ const Books = () => {
                           "linear-gradient(45deg, rgb(220,5,90), rgb(200,5,80))",
                       },
                     }}
-                    // onClick={() => navigate(`/new/${news.id}`)}
+                    onClick={() => navigate(`/book/${book.id}`)}
                   >
                     Nghe
                   </Button>
@@ -197,7 +189,6 @@ const Books = () => {
           </Box>
         )}
       </Box>
-
       <Footer />
     </Box>
   );

@@ -4,6 +4,7 @@ import Landing from "pages/Landing";
 import News from "pages/News";
 import Books from "pages/Books";
 import New from "pages/New";
+import Book from "pages/Book";
 
 const routes = [
   {
@@ -29,6 +30,10 @@ const routes = [
   {
     path: "/new/:id",
     component: New,
+  },
+  {
+    path: "/book/:id",
+    component: Book,
   },
 ];
 
