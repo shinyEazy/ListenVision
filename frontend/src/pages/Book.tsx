@@ -6,6 +6,7 @@ import {
   List,
   ListItem,
   ListItemText,
+  Slider,
 } from "@mui/material";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -14,7 +15,6 @@ import SkipNextIcon from "@mui/icons-material/SkipNext";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 import Header from "../components/Header";
-import Footer from "../components/Footer";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -22,12 +22,14 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 import { faCirclePlay } from "@fortawesome/free-solid-svg-icons";
+import { useRef } from "react";
 
 interface Part {
   part_id: number;
   title: string;
   content: string;
   duration: string;
+  url: string;
 }
 
 interface NewBook {
@@ -48,6 +50,13 @@ const BookPage = () => {
   const [loading, setLoading] = useState(true);
 
   const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+
+  const [audioSource, setAudioSource] = useState<string | null>(null);
+  const [currentPart, setCurrentPart] = useState<Part | null>(null);
+  const [progress, setProgress] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
@@ -68,6 +77,11 @@ const BookPage = () => {
           )
           .slice(0, 2);
         setRelatedBooks(related);
+
+        if (foundBook?.parts?.length) {
+          setCurrentPart(foundBook.parts[0]);
+          setAudioSource(foundBook.parts[0].url);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -81,6 +95,60 @@ const BookPage = () => {
   const description = newBook?.description
     ? newBook.description.split("\n").filter((line) => line.trim() !== "")
     : [];
+
+  const handlePartClick = async (part: Part) => {
+    setCurrentPart(part);
+    setAudioSource(part.url);
+    setProgress(0);
+
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.load();
+
+      await new Promise((resolve) => {
+        audioRef.current!.oncanplay = resolve;
+      });
+
+      audioRef.current.play();
+    }
+  };
+
+  const handleTimeUpdate = () => {
+    if (audioRef.current) {
+      setCurrentTime(audioRef.current.currentTime);
+    }
+  };
+
+  const handleLoadedMetadata = () => {
+    if (audioRef.current) {
+      setDuration(audioRef.current.duration);
+    }
+  };
+
+  const formatTime = (time: number) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60)
+      .toString()
+      .padStart(2, "0");
+    return `${minutes}:${seconds}`;
+  };
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.addEventListener("timeupdate", handleTimeUpdate);
+      audioRef.current.addEventListener("loadedmetadata", handleLoadedMetadata);
+
+      return () => {
+        if (audioRef.current) {
+          audioRef.current.removeEventListener("timeupdate", handleTimeUpdate);
+          audioRef.current.removeEventListener(
+            "loadedmetadata",
+            handleLoadedMetadata
+          );
+        }
+      };
+    }
+  }, []);
 
   return (
     <Box>
@@ -218,12 +286,14 @@ const BookPage = () => {
               {newBook?.parts.map((part, index) => (
                 <ListItem
                   key={part.part_id}
+                  onClick={() => handlePartClick(part)}
                   sx={{
                     display: "flex",
                     alignItems: "center",
                     margin: "2px 0 4px",
                     justifyContent: "space-between",
                     color: "#ccc",
+                    cursor: "pointer",
                     "&:hover": {
                       backgroundColor: "rgb(182,102,99)",
                       color: "#fff",
@@ -276,7 +346,7 @@ const BookPage = () => {
         display="flex"
         justifyContent="space-between"
         sx={{
-          margin: "40px auto",
+          margin: "40px auto 200px",
           maxWidth: "1200px",
         }}
       >
@@ -323,7 +393,7 @@ const BookPage = () => {
               >
                 <Box
                   component="img"
-                  src={book.image || "https://via.placeholder.com/150x200"}
+                  src={book.image}
                   alt={book.title}
                   sx={{
                     width: "100%",
@@ -363,12 +433,14 @@ const BookPage = () => {
           bottom: 0,
           left: 0,
           width: "100%",
-          backgroundColor: "#000",
+          backgroundColor: "#141414",
           color: "#fff",
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: "center",
           padding: "10px 20px",
+          gap: "40px",
+          height: "120px",
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: "15px" }}>
@@ -376,32 +448,81 @@ const BookPage = () => {
             component="img"
             src={newBook?.image}
             alt="Book Cover"
-            sx={{ width: "50px", height: "50px", borderRadius: "4px" }}
+            sx={{ width: "60px", height: "70px", borderRadius: "4px" }}
           />
           <Box>
             <Typography variant="body1">{newBook?.title}</Typography>
             <Typography variant="body2" color="gray">
               {newBook?.author}
             </Typography>
+            <Typography variant="body2" color="gray">
+              {currentPart?.title || "Select a chapter"}
+            </Typography>
           </Box>
         </Box>
         {/* Audio Controls */}
-        <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <IconButton sx={{ color: "#fff" }}>
-            <SkipPreviousIcon />
-          </IconButton>
-          <IconButton onClick={togglePlay} sx={{ color: "#fff" }}>
-            {isPlaying ? <PauseIcon /> : <PlayArrowIcon />}
-          </IconButton>
-          <IconButton sx={{ color: "#fff" }}>
-            <SkipNextIcon />
-          </IconButton>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+            width: "900px",
+          }}
+        >
+          <Box>
+            <IconButton sx={{ color: "#fff" }}>
+              <SkipPreviousIcon />
+            </IconButton>
+            <IconButton
+              onClick={() => {
+                if (audioRef.current) {
+                  if (audioRef.current.paused) {
+                    audioRef.current.play();
+                  } else {
+                    audioRef.current.pause();
+                  }
+                }
+              }}
+              sx={{ color: "#fff" }}
+            >
+              {audioRef.current?.paused ? (
+                <PlayArrowIcon style={{ fontSize: "2.3rem" }} />
+              ) : (
+                <PauseIcon style={{ fontSize: "2.3rem" }} />
+              )}
+            </IconButton>
+            <IconButton sx={{ color: "#fff" }}>
+              <SkipNextIcon />
+            </IconButton>
+          </Box>
+          <Box width="100%">
+            <Slider
+              value={(progress / duration) * 100 || 0}
+              onChange={(event, newValue) => {
+                if (audioRef.current) {
+                  audioRef.current.currentTime =
+                    (duration * (newValue as number)) / 100;
+                  setProgress(audioRef.current.currentTime);
+                }
+              }}
+              sx={{
+                color: "#fff",
+                flex: 1,
+              }}
+            />
+          </Box>
+          <Box width="100%" display="flex" justifyContent="space-between">
+            <Typography>{formatTime(currentTime)}</Typography>
+            <Typography>{formatTime(duration)}</Typography>
+          </Box>
         </Box>
-        <Typography variant="body2" color="gray">
-          00:12 / 28:15
-        </Typography>
       </Box>
-      <Footer />
+      <audio
+        ref={audioRef}
+        src={audioSource || ""}
+        onTimeUpdate={handleTimeUpdate}
+        onLoadedMetadata={handleLoadedMetadata}
+      />
     </Box>
   );
 };
