@@ -114,31 +114,34 @@ const New = () => {
         >
           {newData.time}
         </Typography>
-        <Box sx={{ margin: "20px 0" }}>
-          <CardMedia
-            component="img"
-            image={newData.image}
-            alt={newData.title}
-            sx={{
-              borderRadius: "8px",
-              objectFit: "cover",
-              maxHeight: "600px",
-              marginBottom: "16px",
-            }}
-          />
+        <Box
+          sx={{
+            position: "relative",
+            width: "100%",
+            margin: "20px 0",
+            borderRadius: "8px",
+            overflow: "hidden",
+            height: "400px",
+            backgroundImage: `url(${newData.image})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
           <CardMedia
             component="video"
             controls
             src={newData.video}
             sx={{
+              position: "absolute",
+              height: "80px",
+              bottom: "0",
+              left: "0",
               width: "100%",
-              borderRadius: "8px",
               border: "1px solid #ddd",
-              marginTop: "16px",
-              height: "100px",
             }}
           />
         </Box>
+
         {paragraphs.map((paragraph, index) => (
           <Typography key={index} fontSize="1.3rem" paragraph>
             {paragraph}
