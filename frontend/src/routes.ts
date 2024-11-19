@@ -3,6 +3,7 @@ import HomePage from "pages/Homepage";
 import Landing from "pages/Landing";
 import News from "pages/News";
 import Books from "pages/Books";
+import New from "pages/New";
 
 const routes = [
   {
@@ -24,6 +25,10 @@ const routes = [
   {
     path: "*",
     component: NoFoundPage,
+  },
+  {
+    path: "/new/:id",
+    component: New,
   },
 ];
 

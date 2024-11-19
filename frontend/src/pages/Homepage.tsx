@@ -9,6 +9,8 @@ import "../styles.css";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -22,91 +24,7 @@ const HomePage = () => {
       }}
     >
       <Box sx={{ flex: 1 }}>
-        <Box>
-          <Box
-            position="relative"
-            width="100%"
-            borderBottom="2px solid #e0e0e0"
-            paddingY="10px"
-            bgcolor="#fff"
-            display="flex"
-            justifyContent="center"
-          >
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              width="100%"
-              maxWidth="1200px"
-              padding="0 20px"
-            >
-              <Typography
-                fontSize="1.6rem"
-                fontWeight="600"
-                display="flex"
-                alignItems="center"
-                color="rgb(252,6,106)"
-                onClick={() => navigate("/")}
-                sx={{ cursor: "pointer" }}
-              >
-                ListenVision
-              </Typography>
-              <Box>
-                <TextField
-                  placeholder="Search for audio news and articles"
-                  variant="outlined"
-                  style={{
-                    borderRadius: "100px",
-                    width: "450px",
-                  }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <FontAwesomeIcon
-                          icon={faMagnifyingGlass}
-                          style={{ cursor: "pointer", color: "#888" }}
-                        />
-                      </InputAdornment>
-                    ),
-                  }}
-                  sx={{
-                    "& .MuiOutlinedInput-root": {
-                      borderRadius: "50px",
-                    },
-                  }}
-                />
-              </Box>
-              <Box
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                gap="30px"
-                color="rgb(252,6,106)"
-              >
-                <Typography
-                  fontSize="1.2rem"
-                  onClick={() => navigate("/landing")}
-                  sx={{ cursor: "pointer" }}
-                >
-                  Trang Chủ
-                </Typography>
-                <Typography
-                  fontSize="1.2rem"
-                  onClick={() => navigate("/news")}
-                  sx={{ cursor: "pointer" }}
-                >
-                  Tin tức
-                </Typography>
-                <Typography
-                  fontSize="1.2rem"
-                  onClick={() => navigate("/books")}
-                  sx={{ cursor: "pointer" }}
-                >
-                  Sách
-                </Typography>
-              </Box>
-            </Box>
-          </Box>
-        </Box>
+        <Header />
         <Box textAlign="center" marginTop="20px">
           <Typography fontWeight="800" fontSize="2.3rem" color="#333">
             Chào mừng đến với ListenVision
@@ -219,85 +137,7 @@ const HomePage = () => {
           Bắt Đầu Ngay!
         </Button>
       </Box>
-      <Box
-        bgcolor="#f8d7da"
-        padding="30px 40px"
-        textAlign="center"
-        marginTop="40px"
-        display="flex"
-        justifyContent="space-between"
-      >
-        <Box alignItems="start" textAlign="start">
-          <Typography fontWeight="600">Về ListenVision</Typography>
-          <Typography>
-            ListenVision là điểm đến cho những tin tức âm thanh và sách nói cuốn
-            hút, đem những câu chuyện trở nên sống động.
-          </Typography>
-        </Box>
-        <Box alignItems="start" textAlign="start">
-          <Typography fontWeight="600">Liên Hệ</Typography>
-          <Typography>Email: support@listenvision.com</Typography>
-        </Box>
-        <Box alignItems="start" textAlign="start">
-          <Typography fontWeight="600">Theo Dõi Chúng Tôi</Typography>
-          <Box display="flex" gap="10px">
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: "rgb(252,6,106)",
-                color: "#fff",
-                fontWeight: "bold",
-                borderRadius: "8px",
-                fontSize: "1.5rem",
-                textTransform: "none",
-                minWidth: "48px",
-                width: "32px",
-              }}
-            >
-              <img
-                src="https://uiparadox.co.uk/public/templates/flynow/v2/assets/media/icons/facebook.png"
-                alt="Podcast thumbnail"
-              ></img>
-            </Button>
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: "rgb(252,6,106)",
-                color: "#fff",
-                fontWeight: "bold",
-                borderRadius: "8px",
-                fontSize: "1.5rem",
-                textTransform: "none",
-                minWidth: "48px",
-                width: "32px",
-              }}
-            >
-              <img
-                src="https://uiparadox.co.uk/public/templates/flynow/v2/assets/media/icons/twitter.png"
-                alt="Podcast thumbnail"
-              ></img>
-            </Button>
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: "rgb(252,6,106)",
-                color: "#fff",
-                fontWeight: "bold",
-                borderRadius: "8px",
-                fontSize: "1.5rem",
-                textTransform: "none",
-                minWidth: "48px",
-                width: "32px",
-              }}
-            >
-              <img
-                src="https://uiparadox.co.uk/public/templates/flynow/v2/assets/media/icons/instagram.png"
-                alt="Podcast thumbnail"
-              ></img>
-            </Button>
-          </Box>
-        </Box>
-      </Box>
+      <Footer />
     </Box>
   );
 };
