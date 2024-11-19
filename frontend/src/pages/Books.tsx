@@ -6,28 +6,39 @@ import {
   CardMedia,
   Button,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
+interface Book {
+  id: number;
+  title: string;
+  author: string;
+  image: string;
+  description: string;
+}
+
 const Books = () => {
-  const navigate = useNavigate();
-  const booksData = [
-    {
-      title: "Cuốn sách hay 1",
-      author: "Tác giả 1",
-      image:
-        "https://muagitot.com/upload_images/images/2022/03/29/acbb422fb3f47ffc8fa77f9424479c48.jpg?w=1130",
-      description: "Đây là một cuốn sách hay về chủ đề ...",
-    },
-    {
-      title: "Cuốn sách hay 2",
-      author: "Tác giả 2",
-      image:
-        "https://www.elle.vn/wp-content/uploads/2021/07/15/442832/1-sach-hay-song-cham.jpg",
-      description: "Cuốn sách này giúp bạn hiểu rõ hơn về ...",
-    },
-  ];
+  const [booksData, setBooksData] = useState<Book[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const response = await fetch("/data/books.json"); // Adjust the path based on your public folder structure
+        if (!response.ok) throw new Error("Failed to load books data");
+        const data: Book[] = await response.json();
+        setBooksData(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Unknown error");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBooks();
+  }, []);
 
   const genres = [
     "Tài Chính",
@@ -93,109 +104,98 @@ const Books = () => {
           Sách nói mới nhất
         </Typography>
 
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: {
-              xs: "repeat(1, 1fr)",
-              sm: "repeat(2, 1fr)",
-              md: "repeat(3, 1fr)",
-              lg: "repeat(4, 1fr)",
-            },
-            gap: "20px",
-          }}
-        >
-          {booksData.map((book, index) => (
-            <Card
-              key={index}
-              sx={{
-                borderRadius: "16px",
-                overflow: "hidden",
-                transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                "&:hover": {
-                  transform: "translateY(-5px)",
-                  boxShadow: "0px 5px 15px rgba(0,0,0,0.3)",
-                },
-              }}
-            >
-              {/* Image with Gradient Overlay */}
-              <Box
+        {loading && <Typography>Loading...</Typography>}
+        {error && <Typography color="error">{error}</Typography>}
+
+        {!loading && !error && (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              gap: "20px",
+            }}
+          >
+            {booksData.map((book) => (
+              <Card
+                key={book.id}
                 sx={{
-                  position: "relative",
-                  height: "200px",
-                  backgroundImage: `url(${book.image})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  padding: "16px",
+                  borderRadius: "12px",
+                  boxShadow: 2,
+                  maxWidth: "200px",
+                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                  "&:hover": {
+                    transform: "translateY(-5px)",
+                    boxShadow: 4,
+                  },
                 }}
               >
-                <Box
+                <CardMedia
+                  component="img"
+                  height="180"
+                  image={book.image}
+                  alt={book.title}
                   sx={{
-                    position: "absolute",
-                    bottom: 0,
-                    width: "100%",
-                    height: "50%",
-                    background:
-                      "linear-gradient(to top, rgba(0,0,0,0.6), transparent)",
+                    borderRadius: "8px",
+                    mb: 2,
+                    height: "280px",
+                    objectFit: "cover",
                   }}
                 />
-              </Box>
-
-              {/* Content */}
-              <CardContent sx={{ padding: "16px" }}>
                 <Typography
                   variant="h6"
                   fontWeight="bold"
+                  mb={1}
                   sx={{
                     display: "-webkit-box",
                     WebkitBoxOrient: "vertical",
                     WebkitLineClamp: 2,
                     overflow: "hidden",
-                    height: "50px",
                   }}
                 >
                   {book.title}
                 </Typography>
                 <Typography
-                  variant="body2"
+                  variant="body1"
                   color="text.secondary"
-                  sx={{ marginBottom: "8px" }}
-                >
-                  {book.author}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
+                  mb={2}
                   sx={{
                     display: "-webkit-box",
                     WebkitBoxOrient: "vertical",
-                    WebkitLineClamp: 3,
+                    WebkitLineClamp: 2,
                     overflow: "hidden",
-                    height: "60px",
                   }}
                 >
-                  {book.description}
+                  {book.author}
                 </Typography>
-              </CardContent>
-
-              {/* Button */}
-              <Button
-                variant="contained"
-                sx={{
-                  bgcolor: "rgb(252,6,106)",
-                  color: "#fff",
-                  borderRadius: "20px",
-                  margin: "16px",
-                  textTransform: "none",
-                  "&:hover": {
-                    bgcolor: "rgb(220,5,90)",
-                  },
-                }}
-              >
-                Đọc Sách
-              </Button>
-            </Card>
-          ))}
-        </Box>
+                <Box mt="auto" display="flex" justifyContent="flex-end">
+                  <Button
+                    variant="contained"
+                    sx={{
+                      background:
+                        "linear-gradient(45deg, rgb(252,6,106), rgb(220,5,90))",
+                      color: "#fff",
+                      borderRadius: "30px",
+                      fontSize: "1rem",
+                      padding: "4px 20px",
+                      textTransform: "none",
+                      "&:hover": {
+                        background:
+                          "linear-gradient(45deg, rgb(220,5,90), rgb(200,5,80))",
+                      },
+                    }}
+                    // onClick={() => navigate(`/new/${news.id}`)}
+                  >
+                    Nghe
+                  </Button>
+                </Box>
+              </Card>
+            ))}
+          </Box>
+        )}
       </Box>
 
       <Footer />
