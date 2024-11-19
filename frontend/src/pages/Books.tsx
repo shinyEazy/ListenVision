@@ -1,18 +1,14 @@
 import {
   Box,
   Typography,
-  TextField,
-  InputAdornment,
   Card,
   CardContent,
   CardMedia,
-  AppBar,
-  Toolbar,
   Button,
 } from "@mui/material";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const Books = () => {
   const navigate = useNavigate();
@@ -31,206 +27,168 @@ const Books = () => {
         "https://www.elle.vn/wp-content/uploads/2021/07/15/442832/1-sach-hay-song-cham.jpg",
       description: "Cuốn sách này giúp bạn hiểu rõ hơn về ...",
     },
-    {
-      title: "Cuốn sách hay 3",
-      author: "Tác giả 3",
-      image:
-        "https://www.elle.vn/wp-content/uploads/2021/07/15/442832/1-sach-hay-song-cham.jpg",
-      description: "Một cuốn sách thú vị khám phá về ...",
-    },
-    {
-      title: "Cuốn sách hay 3",
-      author: "Tác giả 3",
-      image:
-        "https://www.elle.vn/wp-content/uploads/2021/07/15/442832/1-sach-hay-song-cham.jpg",
-      description: "Một cuốn sách thú vị khám phá về ...",
-    },
-    {
-      title: "Cuốn sách hay 3",
-      author: "Tác giả 3",
-      image:
-        "https://www.elle.vn/wp-content/uploads/2021/07/15/442832/1-sach-hay-song-cham.jpg",
-      description: "Một cuốn sách thú vị khám phá về ...",
-    },
   ];
+
   const genres = [
-    "Văn học",
-    "Khoa học",
-    "Lịch sử",
-    "Tâm lý",
-    "Công nghệ",
-    "Trinh thám",
-    "Sức khỏe",
-    "Giáo dục",
-    "Thiếu nhi",
+    "Tài Chính",
+    "Khoa Học",
+    "Lịch Sử",
+    "Tâm Lý",
+    "Công Nghệ",
+    "Trinh Thám",
+    "Sức Khỏe",
+    "Giáo Dục",
+    "Thiếu Nhi",
   ];
 
   return (
     <Box>
+      <Header />
+
+      {/* Genre Bar */}
       <Box
         sx={{
-          position: "sticky",
-          top: 0,
-          width: "100%",
-          borderBottom: "2px solid #e0e0e0",
-          bgcolor: "#fff",
-          zIndex: 10,
-          paddingY: "10px",
           display: "flex",
+          padding: "10px 20px",
+          bgcolor: "#f4f4f4",
           justifyContent: "center",
+          gap: "8px",
+          backgroundColor: "#f8d7da",
+          boxShadow: "0px 2px 5px rgba(0,0,0,0.1)",
         }}
       >
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          width="100%"
-          maxWidth="1200px"
-          padding="0 20px"
-        >
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            width="100%"
-            maxWidth="1200px"
-            padding="0 20px"
+        {genres.map((genre, index) => (
+          <Button
+            key={index}
+            sx={{
+              fontSize: "1.1rem",
+              flex: "none",
+              padding: "4px 20px",
+              borderRadius: "20px",
+              bgcolor: "white",
+              color: "#252525",
+              boxShadow: "0px 1px 3px rgba(0,0,0,0.2)",
+              marginRight: "10px",
+              textTransform: "none",
+              "&:hover": {
+                bgcolor: "rgb(252,6,106)",
+                color: "white",
+              },
+            }}
           >
-            <Typography
-              fontSize="1.6rem"
-              fontWeight="600"
-              display="flex"
-              alignItems="center"
-              color="rgb(252,6,106)"
-              onClick={() => navigate("/")}
-              sx={{ cursor: "pointer" }}
-            >
-              ListenVision
-            </Typography>
-            <Box>
-              <TextField
-                placeholder="Search for audio news and articles"
-                variant="outlined"
-                style={{
-                  borderRadius: "100px",
-                  width: "450px",
-                }}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <FontAwesomeIcon
-                        icon={faMagnifyingGlass}
-                        style={{ cursor: "pointer", color: "#888" }}
-                      />
-                    </InputAdornment>
-                  ),
-                }}
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    borderRadius: "50px",
-                  },
-                }}
-              />
-            </Box>
-            <Box
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              gap="30px"
-              color="rgb(252,6,106)"
-            >
-              <Typography
-                fontSize="1.2rem"
-                onClick={() => navigate("/landing")}
-                sx={{ cursor: "pointer" }}
-              >
-                Trang Chủ
-              </Typography>
-              <Typography
-                fontSize="1.2rem"
-                onClick={() => navigate("/news")}
-                sx={{ cursor: "pointer" }}
-              >
-                Tin tức
-              </Typography>
-              <Typography
-                fontSize="1.2rem"
-                onClick={() => navigate("/books")}
-                sx={{ cursor: "pointer" }}
-              >
-                Sách
-              </Typography>
-            </Box>
-          </Box>
-        </Box>
+            {genre}
+          </Button>
+        ))}
       </Box>
-      <AppBar position="static" color="primary">
-        <Toolbar sx={{ justifyContent: "space-between" }}>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ color: "rgb(252,6,106)" }}
-          >
-            Thể loại Sách
-          </Typography>
-          <Box
-            sx={{ display: "flex", flex: 1, justifyContent: "space-evenly" }}
-          >
-            {genres.map((genre, index) => (
-              <Button
-                key={index}
-                color="inherit"
-                sx={{ flex: 1, textAlign: "center" }}
-              >
-                {genre}
-              </Button>
-            ))}
-          </Box>
-        </Toolbar>
-      </AppBar>
+
+      {/* Book Section */}
       <Box sx={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}>
         <Typography
-          variant="h4"
+          variant="h5"
           component="h1"
-          sx={{ marginBottom: "20px", color: "#333" }}
+          fontWeight="bold"
+          color="rgb(252,6,106)"
+          sx={{ marginBottom: "20px" }}
         >
-          Danh sách Sách
+          Sách nói mới nhất
         </Typography>
+
         <Box
           sx={{
             display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
+            gridTemplateColumns: {
+              xs: "repeat(1, 1fr)",
+              sm: "repeat(2, 1fr)",
+              md: "repeat(3, 1fr)",
+              lg: "repeat(4, 1fr)",
+            },
             gap: "20px",
           }}
         >
           {booksData.map((book, index) => (
-            <Card key={index} sx={{ width: "300px" }}>
-              <CardMedia
-                component="img"
-                height="200"
-                image={book.image}
-                alt={book.title}
-              />
-              <CardContent>
-                <Typography variant="h6" component="div">
+            <Card
+              key={index}
+              sx={{
+                borderRadius: "16px",
+                overflow: "hidden",
+                transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                "&:hover": {
+                  transform: "translateY(-5px)",
+                  boxShadow: "0px 5px 15px rgba(0,0,0,0.3)",
+                },
+              }}
+            >
+              {/* Image with Gradient Overlay */}
+              <Box
+                sx={{
+                  position: "relative",
+                  height: "200px",
+                  backgroundImage: `url(${book.image})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              >
+                <Box
+                  sx={{
+                    position: "absolute",
+                    bottom: 0,
+                    width: "100%",
+                    height: "50%",
+                    background:
+                      "linear-gradient(to top, rgba(0,0,0,0.6), transparent)",
+                  }}
+                />
+              </Box>
+
+              {/* Content */}
+              <CardContent sx={{ padding: "16px" }}>
+                <Typography
+                  variant="h6"
+                  fontWeight="bold"
+                  sx={{
+                    display: "-webkit-box",
+                    WebkitBoxOrient: "vertical",
+                    WebkitLineClamp: 2,
+                    overflow: "hidden",
+                    height: "50px",
+                  }}
+                >
                   {book.title}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ marginBottom: "8px" }}
+                >
                   {book.author}
                 </Typography>
                 <Typography
                   variant="body2"
                   color="text.secondary"
-                  sx={{ marginTop: "10px" }}
+                  sx={{
+                    display: "-webkit-box",
+                    WebkitBoxOrient: "vertical",
+                    WebkitLineClamp: 3,
+                    overflow: "hidden",
+                    height: "60px",
+                  }}
                 >
                   {book.description}
                 </Typography>
               </CardContent>
+
+              {/* Button */}
               <Button
                 variant="contained"
-                color="error"
                 sx={{
-                  position: "relative",
-                  bottom: "10px",
-                  left: "10px",
+                  bgcolor: "rgb(252,6,106)",
+                  color: "#fff",
+                  borderRadius: "20px",
+                  margin: "16px",
+                  textTransform: "none",
+                  "&:hover": {
+                    bgcolor: "rgb(220,5,90)",
+                  },
                 }}
               >
                 Đọc Sách
@@ -239,85 +197,8 @@ const Books = () => {
           ))}
         </Box>
       </Box>
-      <Box
-        bgcolor="#f8d7da"
-        padding="30px 40px"
-        textAlign="center"
-        marginTop="40px"
-        display="flex"
-        justifyContent="space-between"
-      >
-        <Box alignItems="start" textAlign="start">
-          <Typography fontWeight="600">Về ListenVision</Typography>
-          <Typography>
-            ListenVision là điểm đến cho những tin tức âm thanh và sách nói cuốn
-            hút, đem những câu chuyện trở nên sống động.
-          </Typography>
-        </Box>
-        <Box alignItems="start" textAlign="start">
-          <Typography fontWeight="600">Liên Hệ</Typography>
-          <Typography>Email: support@listenvision.com</Typography>
-        </Box>
-        <Box alignItems="start" textAlign="start">
-          <Typography fontWeight="600">Theo Dõi Chúng Tôi</Typography>
-          <Box display="flex" gap="10px">
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: "rgb(252,6,106)",
-                color: "#fff",
-                fontWeight: "bold",
-                borderRadius: "8px",
-                fontSize: "1.5rem",
-                textTransform: "none",
-                minWidth: "48px",
-                width: "32px",
-              }}
-            >
-              <img
-                src="https://uiparadox.co.uk/public/templates/flynow/v2/assets/media/icons/facebook.png"
-                alt="Podcast thumbnail"
-              ></img>
-            </Button>
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: "rgb(252,6,106)",
-                color: "#fff",
-                fontWeight: "bold",
-                borderRadius: "8px",
-                fontSize: "1.5rem",
-                textTransform: "none",
-                minWidth: "48px",
-                width: "32px",
-              }}
-            >
-              <img
-                src="https://uiparadox.co.uk/public/templates/flynow/v2/assets/media/icons/twitter.png"
-                alt="Podcast thumbnail"
-              ></img>
-            </Button>
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: "rgb(252,6,106)",
-                color: "#fff",
-                fontWeight: "bold",
-                borderRadius: "8px",
-                fontSize: "1.5rem",
-                textTransform: "none",
-                minWidth: "48px",
-                width: "32px",
-              }}
-            >
-              <img
-                src="https://uiparadox.co.uk/public/templates/flynow/v2/assets/media/icons/instagram.png"
-                alt="Podcast thumbnail"
-              ></img>
-            </Button>
-          </Box>
-        </Box>
-      </Box>
+
+      <Footer />
     </Box>
   );
 };
