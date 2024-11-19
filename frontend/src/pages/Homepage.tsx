@@ -1,14 +1,6 @@
-import {
-  Box,
-  Typography,
-  Button,
-  InputAdornment,
-  TextField,
-} from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import "../styles.css";
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
@@ -29,7 +21,7 @@ const HomePage = () => {
           <Typography fontWeight="800" fontSize="2.3rem" color="#333">
             Chào mừng đến với ListenVision
           </Typography>
-          <Typography fontSize="1.2rem" color="#666" marginTop="10px">
+          <Typography fontSize="1.2rem" color="#666">
             Nâng cao trải nghiệm nghe của bạn với nội dung dễ tiếp cận cho mọi
             người.
           </Typography>
