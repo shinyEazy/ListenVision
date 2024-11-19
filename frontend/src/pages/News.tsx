@@ -1,14 +1,4 @@
-import {
-  Box,
-  Button,
-  Typography,
-  TextField,
-  InputAdornment,
-  Card,
-  CardMedia,
-} from "@mui/material";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { Box, Button, Typography, Card, CardMedia } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
@@ -116,19 +106,7 @@ const News = () => {
       {["Thời sự", "Thế giới", "Kinh tế", "Thể thao"].map((category) =>
         renderNewsByCategory(category)
       )}
-      {/* Footer */}
-      <Box
-        bgcolor="#f8d7da"
-        padding="30px 40px"
-        textAlign="center"
-        marginTop="40px"
-      >
-        <Typography fontWeight="600">Về ListenVision</Typography>
-        <Typography>
-          ListenVision là điểm đến cho những tin tức âm thanh và sách nói cuốn
-          hút, đem những câu chuyện trở nên sống động.
-        </Typography>
-      </Box>
+      <Footer />
     </Box>
   );
 };

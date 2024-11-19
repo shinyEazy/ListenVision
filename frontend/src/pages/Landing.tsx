@@ -1,14 +1,4 @@
-import {
-  Box,
-  Typography,
-  Button,
-  TextField,
-  InputAdornment,
-  Card,
-  CardMedia,
-} from "@mui/material";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { Box, Typography, Button, Card, CardMedia } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
