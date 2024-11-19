@@ -1,16 +1,7 @@
-import {
-  Box,
-  Button,
-  Typography,
-  TextField,
-  InputAdornment,
-  Card,
-  CardMedia,
-} from "@mui/material";
+import { Box, Typography, TextField, InputAdornment } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 
 const Header = () => {
   const navigate = useNavigate();

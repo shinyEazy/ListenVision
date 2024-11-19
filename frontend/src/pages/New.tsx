@@ -1,6 +1,8 @@
 import { useParams } from "react-router-dom";
 import { Box, Typography, CircularProgress } from "@mui/material";
 import { useEffect, useState } from "react";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 interface NewData {
   id: number;
@@ -36,7 +38,8 @@ const New = () => {
   if (!newData) return <Typography>Book not found.</Typography>;
 
   return (
-    <Box padding={2}>
+    <Box>
+      <Header />
       <Typography variant="h5" gutterBottom>
         {newData.title}
       </Typography>
@@ -44,6 +47,7 @@ const New = () => {
         {newData.time}
       </Typography>
       <Typography variant="body1">{newData.content}</Typography>
+      <Footer />
     </Box>
   );
 };

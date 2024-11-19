@@ -26,7 +26,6 @@ const News = () => {
   }, []);
 
   const renderNewsByCategory = (category) => {
-    // Filter and sort by ID descending
     const filteredNews = newsData
       .filter((news) => news.category === category)
       .sort((a, b) => b.id - a.id)
@@ -53,9 +52,9 @@ const News = () => {
           gap="20px"
           justifyContent={filteredNews.length < 4 ? "center" : "start"}
         >
-          {filteredNews.map((news, index) => (
+          {filteredNews.map((news) => (
             <Card
-              key={index}
+              key={news.id}
               sx={{
                 display: "flex",
                 flexDirection: "column",
@@ -124,6 +123,7 @@ const News = () => {
                         "linear-gradient(45deg, rgb(220,5,90), rgb(200,5,80))",
                     },
                   }}
+                  onClick={() => navigate(`/new/${news.id}`)}
                 >
                   Nghe
                 </Button>
