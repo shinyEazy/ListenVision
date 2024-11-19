@@ -18,7 +18,6 @@ interface NewData {
   time: string;
   content: string;
   image: string;
-  video: string;
 }
 
 const New = () => {
