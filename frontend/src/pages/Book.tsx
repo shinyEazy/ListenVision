@@ -209,26 +209,64 @@ const BookPage = () => {
           {/* Chapters List */}
           <Box
             sx={{
-              minWidth: "250px",
-              bgcolor: "#a52a2a",
+              minWidth: "370px",
+              bgcolor: "rgb(152,36,32)",
               borderRadius: "8px",
               overflowY: "auto",
-              maxHeight: "400px",
+              maxHeight: "300px",
+              "&::-webkit-scrollbar": { display: "none" },
             }}
           >
-            <List>
-              {newBook?.parts.map((part) => (
+            <List style={{ padding: "8px" }}>
+              {newBook?.parts.map((part, index) => (
                 <ListItem
                   key={part.part_id}
                   sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    margin: "2px 0 4px",
+                    justifyContent: "space-between",
                     color: "#ccc",
-                    "&:hover": { backgroundColor: "#8b0000", color: "#fff" },
+                    "&:hover": {
+                      backgroundColor: "rgb(182,102,99)",
+                      color: "#fff",
+                      borderRadius: "8px",
+                    },
                   }}
                 >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      minWidth: "32px",
+                      minHeight: "32px",
+                      borderRadius: "8px",
+                      position: "relative",
+                      transition: "all 0.3s ease-in-out",
+                      color: "#fff",
+                      backgroundColor: "transparent",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontSize: "1.5rem",
+                        position: "absolute",
+                      }}
+                    >
+                      {index + 1}
+                    </Typography>
+                  </Box>
                   <ListItemText
                     primary={part.title}
-                    secondary={part.duration}
-                    sx={{ textAlign: "center" }}
+                    secondary={`${part.duration}`}
+                    primaryTypographyProps={{
+                      sx: { color: "white" },
+                    }}
+                    secondaryTypographyProps={{
+                      sx: { color: "white" },
+                    }}
+                    sx={{ textAlign: "left", ml: "20px" }}
                   />
                 </ListItem>
               ))}
