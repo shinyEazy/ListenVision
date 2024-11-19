@@ -26,7 +26,12 @@ const News = () => {
   }, []);
 
   const renderNewsByCategory = (category) => {
-    const filteredNews = newsData.filter((news) => news.category === category);
+    // Filter and sort by ID descending
+    const filteredNews = newsData
+      .filter((news) => news.category === category)
+      .sort((a, b) => b.id - a.id)
+      .slice(0, 4); // Get top 4 by ID
+
     return (
       <Box margin="20px 40px" display="flex" flexDirection="column" gap="20px">
         <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -37,23 +42,33 @@ const News = () => {
             variant="body2"
             color="text.secondary"
             sx={{ cursor: "pointer" }}
-            onClick={() => navigate("/news")}
+            onClick={() => navigate(`/news/${category.toLowerCase()}`)}
           >
             Thêm
           </Typography>
         </Box>
         <Box
           display="grid"
-          gridTemplateColumns="repeat(auto-fit, minmax(300px, 1fr))"
+          gridTemplateColumns={`repeat(auto-fit, minmax(300px, 1fr))`}
           gap="20px"
+          justifyContent={filteredNews.length < 4 ? "center" : "start"}
         >
           {filteredNews.map((news, index) => (
             <Card
               key={index}
               sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
                 padding: "16px",
                 borderRadius: "12px",
                 boxShadow: 2,
+                maxWidth: "300px",
+                transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                "&:hover": {
+                  transform: "translateY(-5px)",
+                  boxShadow: 4,
+                },
               }}
             >
               <CardMedia
@@ -61,30 +76,58 @@ const News = () => {
                 height="180"
                 image={news.image}
                 alt={news.title}
-                sx={{ borderRadius: "8px", mb: 2 }}
-              />
-              <Typography variant="h6" fontWeight="bold" mb={1}>
-                {news.title}
-              </Typography>
-              <Typography variant="body2" color="text.secondary" mb={2} noWrap>
-                {news.content}
-              </Typography>
-              <Button
-                variant="contained"
                 sx={{
-                  backgroundColor: "rgb(252,6,106)",
-                  color: "#fff",
-                  borderRadius: "30px",
-                  fontSize: "1rem",
-                  paddingY: "8px",
-                  textTransform: "none",
-                  "&:hover": {
-                    backgroundColor: "rgb(220,5,90)",
-                  },
+                  borderRadius: "8px",
+                  mb: 2,
+                  objectFit: "cover",
+                }}
+              />
+              <Typography
+                variant="h6"
+                fontWeight="bold"
+                mb={1}
+                sx={{
+                  display: "-webkit-box",
+                  WebkitBoxOrient: "vertical",
+                  WebkitLineClamp: 2,
+                  overflow: "hidden",
                 }}
               >
-                Nghe
-              </Button>
+                {news.title}
+              </Typography>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                mb={2}
+                sx={{
+                  display: "-webkit-box",
+                  WebkitBoxOrient: "vertical",
+                  WebkitLineClamp: 2,
+                  overflow: "hidden",
+                }}
+              >
+                {news.content}
+              </Typography>
+              <Box mt="auto" display="flex" justifyContent="flex-end">
+                <Button
+                  variant="contained"
+                  sx={{
+                    background:
+                      "linear-gradient(45deg, rgb(252,6,106), rgb(220,5,90))",
+                    color: "#fff",
+                    borderRadius: "30px",
+                    fontSize: "1rem",
+                    padding: "4px 20px",
+                    textTransform: "none",
+                    "&:hover": {
+                      background:
+                        "linear-gradient(45deg, rgb(220,5,90), rgb(200,5,80))",
+                    },
+                  }}
+                >
+                  Nghe
+                </Button>
+              </Box>
             </Card>
           ))}
         </Box>
