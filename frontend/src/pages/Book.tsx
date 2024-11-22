@@ -198,7 +198,7 @@ const BookPage = () => {
               }}
             >
               <Typography
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/books")}
                 sx={{ cursor: "pointer" }}
               >
                 Trang chủ

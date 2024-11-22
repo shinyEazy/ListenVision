@@ -109,6 +109,7 @@ const Books = () => {
           >
             {booksData.map((book) => (
               <Card
+                onClick={() => navigate(`/book/${book.id}`)}
                 key={book.id}
                 sx={{
                   display: "flex",
@@ -118,6 +119,7 @@ const Books = () => {
                   borderRadius: "12px",
                   boxShadow: 2,
                   maxWidth: "200px",
+                  cursor: "pointer",
                   transition: "transform 0.3s ease, box-shadow 0.3s ease",
                   "&:hover": {
                     transform: "translateY(-5px)",

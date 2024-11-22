@@ -73,7 +73,7 @@ const Header = () => {
         >
           <Typography
             fontSize="1.2rem"
-            onClick={() => navigate("/landing")}
+            onClick={() => navigate("/")}
             sx={{ cursor: "pointer" }}
           >
             Trang Chủ

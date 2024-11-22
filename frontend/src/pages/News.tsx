@@ -54,6 +54,7 @@ const News = () => {
         >
           {filteredNews.map((news) => (
             <Card
+              onClick={() => navigate(`/new/${news.id}`)}
               key={news.id}
               sx={{
                 display: "flex",

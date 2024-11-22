@@ -6,7 +6,7 @@ const Footer = () => {
       bgcolor="#f8d7da"
       padding="30px 40px"
       textAlign="center"
-      marginTop="40px"
+      marginTop="32px"
       display="flex"
       justifyContent="space-between"
     >

@@ -17,7 +17,7 @@ const HomePage = () => {
     >
       <Box sx={{ flex: 1 }}>
         <Header />
-        <Box textAlign="center" marginTop="20px">
+        <Box textAlign="center" marginTop="10px">
           <Typography fontWeight="800" fontSize="2.3rem" color="#333">
             Chào mừng đến với ListenVision
           </Typography>
@@ -113,9 +113,9 @@ const HomePage = () => {
           </Box>
         </Box>
       </Box>
-      <Box display="flex" justifyContent="center">
+      <Box display="flex" justifyContent="center" gap="40px">
         <Button
-          onClick={() => navigate("/landing")}
+          onClick={() => navigate("/news")}
           variant="contained"
           sx={{
             backgroundColor: "rgb(252,6,106)",
@@ -126,7 +126,21 @@ const HomePage = () => {
             textTransform: "none",
           }}
         >
-          Bắt Đầu Ngay!
+          Tin tức mới nhất
+        </Button>
+        <Button
+          onClick={() => navigate("/books")}
+          variant="contained"
+          sx={{
+            backgroundColor: "rgb(252,6,106)",
+            color: "#fff",
+            fontWeight: "bold",
+            borderRadius: "20px",
+            fontSize: "1.5rem",
+            textTransform: "none",
+          }}
+        >
+          Sách nói nổi bật
         </Button>
       </Box>
       <Footer />
