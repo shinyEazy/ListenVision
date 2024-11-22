@@ -5,15 +5,28 @@ import News from "pages/News";
 import Books from "pages/Books";
 import New from "pages/New";
 import Book from "pages/Book";
+import NewList from "pages/NewList";
 
 const routes = [
+  {
+    path: "/news",
+    component: News,
+  },
+  {
+    path: "/news/:category",
+    component: NewList,
+  },
+  {
+    path: "/new/:id",
+    component: New,
+  },
   {
     path: "/books",
     component: Books,
   },
   {
-    path: "/news",
-    component: News,
+    path: "/book/:id",
+    component: Book,
   },
   {
     path: "/landing",
@@ -26,14 +39,6 @@ const routes = [
   {
     path: "*",
     component: NoFoundPage,
-  },
-  {
-    path: "/new/:id",
-    component: New,
-  },
-  {
-    path: "/book/:id",
-    component: Book,
   },
 ];
 

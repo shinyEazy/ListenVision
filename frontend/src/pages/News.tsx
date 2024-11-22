@@ -5,6 +5,14 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 const News = () => {
+  const formatCategory = (category: string) => {
+    return category
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\s+/g, "-");
+  };
+
   const navigate = useNavigate();
   const [newsData, setNewsData] = useState([]);
 
@@ -41,7 +49,7 @@ const News = () => {
             variant="body2"
             color="text.secondary"
             sx={{ cursor: "pointer" }}
-            onClick={() => navigate(`/news/${category.toLowerCase()}`)}
+            onClick={() => navigate(`/news/${formatCategory(category)}`)}
           >
             Thêm
           </Typography>
