@@ -90,10 +90,12 @@ const NewList = () => {
 
   const handleNextPage = () => {
     navigate(`/news/${categoryName}/${currentPage + 1}`);
+    window.scrollTo(0, 0);
   };
 
   const handlePreviousPage = () => {
     navigate(`/news/${categoryName}/${currentPage - 1}`);
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -126,6 +128,10 @@ const NewList = () => {
           </Typography>
           {" / "}
           <Typography
+            onClick={() => {
+              navigate(`/news/${categoryName}/1`);
+              window.scrollTo(0, 0);
+            }}
             variant="h6"
             fontWeight="bold"
             component="span"
@@ -357,7 +363,11 @@ const NewList = () => {
                       boxShadow: "none",
                       cursor: "pointer",
                       transition: "transform 0.3s",
-                      "&:hover": { transform: "scale(1.02)" },
+                      borderRadius: "0",
+                      "&:hover": {
+                        transform: "scale(1.02)",
+                        backgroundColor: "#f5f5f5",
+                      },
                     }}
                     onClick={() => navigate(`/new/${newsItem.id}`)}
                   >
@@ -376,8 +386,8 @@ const NewList = () => {
                         fontWeight="bold"
                         mb={1}
                         sx={{
-                          wordWrap: "break-word", // Allow words to break if needed
-                          hyphens: "auto", // Automatically hyphenate words when they break
+                          wordWrap: "break-word",
+                          hyphens: "auto",
                         }}
                       >
                         {newsItem.title}
