@@ -15,6 +15,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 interface NewsItem {
   id: number;
@@ -245,29 +247,86 @@ const NewList = () => {
                     alignItems="center"
                     mt={4}
                   >
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      disabled={currentPage === 1}
-                      onClick={handlePreviousPage}
-                    >
-                      Previous
-                    </Button>
+                    {/* Render the Previous button only if it's not disabled */}
+                    {currentPage > 1 && (
+                      <Button
+                        variant="outlined"
+                        onClick={handlePreviousPage}
+                        sx={{
+                          color: "rgb(252,6,106)",
+                          border: "2px solid rgb(252,6,106)",
+                          backgroundColor: "white",
+                          "&:hover": {
+                            backgroundColor: "rgb(252,6,106)",
+                            color: "white",
+                            border: "2px solid rgb(252,6,106)",
+                          },
+                        }}
+                      >
+                        <ArrowBackIosNewIcon />
+                      </Button>
+                    )}
+                    {currentPage === 1 && (
+                      <Button
+                        variant="outlined"
+                        sx={{
+                          color: "white",
+                          border: "none",
+                          backgroundColor: "white",
+                          cursor: "default",
+                          "&:hover": {
+                            backgroundColor: "white",
+                            color: "white",
+                            border: "white",
+                          },
+                        }}
+                      >
+                        <ArrowBackIosNewIcon />
+                      </Button>
+                    )}
                     <Typography>
                       Page {currentPage} of{" "}
                       {Math.ceil(newsList.length / itemsPerPage)}
                     </Typography>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      disabled={
-                        currentPage ===
-                        Math.ceil(newsList.length / itemsPerPage)
-                      }
-                      onClick={handleNextPage}
-                    >
-                      Next
-                    </Button>
+                    {/* Render the Next button only if it's not disabled */}
+                    {currentPage <
+                      Math.ceil(newsList.length / itemsPerPage) && (
+                      <Button
+                        variant="outlined"
+                        onClick={handleNextPage}
+                        sx={{
+                          color: "rgb(252,6,106)",
+                          border: "2px solid rgb(252,6,106)",
+                          backgroundColor: "white",
+                          "&:hover": {
+                            backgroundColor: "rgb(252,6,106)",
+                            color: "white",
+                            border: "2px solid rgb(252,6,106)",
+                          },
+                        }}
+                      >
+                        <ArrowForwardIosIcon />
+                      </Button>
+                    )}{" "}
+                    {currentPage ===
+                      Math.ceil(newsList.length / itemsPerPage) && (
+                      <Button
+                        variant="outlined"
+                        sx={{
+                          color: "white",
+                          border: "none",
+                          backgroundColor: "white",
+                          cursor: "default",
+                          "&:hover": {
+                            backgroundColor: "white",
+                            color: "white",
+                            border: "white",
+                          },
+                        }}
+                      >
+                        <ArrowForwardIosIcon />
+                      </Button>
+                    )}
                   </Stack>
                 </>
               )}
