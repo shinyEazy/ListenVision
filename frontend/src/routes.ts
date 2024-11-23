@@ -6,6 +6,7 @@ import Books from "pages/Books";
 import New from "pages/New";
 import Book from "pages/Book";
 import NewList from "pages/NewList";
+import BookList from "pages/BookList";
 
 const routes = [
   {
@@ -23,6 +24,10 @@ const routes = [
   {
     path: "/books",
     component: Books,
+  },
+  {
+    path: "/books/:categoryName/:page",
+    component: BookList,
   },
   {
     path: "/book/:id",

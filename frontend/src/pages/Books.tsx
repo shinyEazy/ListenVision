@@ -66,6 +66,15 @@ const Books = () => {
         {genres.map((genre, index) => (
           <Button
             key={index}
+            onClick={() =>
+              navigate(
+                `/books/${genre
+                  .toLowerCase()
+                  .normalize("NFD")
+                  .replace(/[\u0300-\u036f]/g, "")
+                  .replace(/\s+/g, "-")}/1`
+              )
+            }
             sx={{
               fontSize: "1.1rem",
               flex: "none",
@@ -95,7 +104,7 @@ const Books = () => {
           color="rgb(252,6,106)"
           sx={{ marginBottom: "20px" }}
         >
-          Sách nói mới nhất
+          Sách nói nổi bật
         </Typography>
         {loading && <Typography>Loading...</Typography>}
         {error && <Typography color="error">{error}</Typography>}
