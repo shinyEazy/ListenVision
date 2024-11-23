@@ -49,7 +49,7 @@ const News = () => {
             variant="body2"
             color="text.secondary"
             sx={{ cursor: "pointer" }}
-            onClick={() => navigate(`/category/${formatCategory(category)}`)}
+            onClick={() => navigate(`/news/${formatCategory(category)}`)}
           >
             Thêm
           </Typography>
