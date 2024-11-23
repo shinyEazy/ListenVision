@@ -9,6 +9,7 @@ import {
   Button,
   Stack,
   Grid,
+  Divider,
 } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -278,51 +279,68 @@ const NewList = () => {
             <Typography
               variant="h6"
               fontWeight="bold"
+              mt={10}
               mb={3}
+              ml="16px"
               sx={{ textAlign: "left", color: "#444" }}
             >
-              Newest News
+              TIÊU ĐIỂM
             </Typography>
-            <Stack spacing={2}>
-              {newestNews.map((newsItem) => (
-                <Card
-                  key={newsItem.id}
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "flex-start",
-                    border: "none",
-                    boxShadow: "none",
-                    cursor: "pointer",
-                    transition: "transform 0.3s",
-                    "&:hover": { transform: "scale(1.02)" },
-                  }}
-                  onClick={() => navigate(`/new/${newsItem.id}`)}
-                >
-                  <CardMedia
-                    component="img"
+            <Stack spacing={3}>
+              {newestNews.map((newsItem, index) => (
+                <div key={newsItem.id}>
+                  <Card
                     sx={{
-                      width: 100,
-                      objectFit: "cover",
-                      borderRadius: "4px",
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "flex-start",
+                      border: "none",
+                      boxShadow: "none",
+                      cursor: "pointer",
+                      transition: "transform 0.3s",
+                      "&:hover": { transform: "scale(1.02)" },
                     }}
-                    image={newsItem.image}
-                    alt={newsItem.title}
-                  />
-                  <CardContent sx={{ paddingLeft: "16px" }}>
-                    <Typography
-                      variant="body1"
-                      fontWeight="bold"
+                    onClick={() => navigate(`/new/${newsItem.id}`)}
+                  >
+                    <CardContent
                       sx={{
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
+                        flex: 1,
+                        padding: "0 16px",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "flex-start",
+                        width: "500px",
                       }}
                     >
-                      {newsItem.title}
-                    </Typography>
-                  </CardContent>
-                </Card>
+                      <Typography
+                        padding="0"
+                        fontWeight="bold"
+                        mb={1}
+                        sx={{
+                          wordWrap: "break-word", // Allow words to break if needed
+                          hyphens: "auto", // Automatically hyphenate words when they break
+                        }}
+                      >
+                        {newsItem.title}
+                      </Typography>
+                    </CardContent>
+                    <CardMedia
+                      component="img"
+                      sx={{
+                        width: 90,
+                        height: 60,
+                        objectFit: "cover",
+                      }}
+                      image={newsItem.image}
+                      alt={newsItem.title}
+                    />
+                  </Card>
+
+                  {/* Add divider after each card except the last one */}
+                  {index < newestNews.length - 1 && (
+                    <Divider sx={{ marginTop: "20px" }} />
+                  )}
+                </div>
               ))}
             </Stack>
           </Grid>
