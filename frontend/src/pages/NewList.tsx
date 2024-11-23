@@ -26,15 +26,18 @@ interface NewsItem {
 }
 
 const NewList = () => {
-  const { categoryName } = useParams<{ categoryName: string }>();
+  const { categoryName, page } = useParams<{
+    categoryName: string;
+    page: string;
+  }>();
   const [newsList, setNewsList] = useState<NewsItem[]>([]);
   const [newestNews, setNewestNews] = useState<NewsItem[]>([]); // For sidebar
   const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1); // Pagination state
-  const itemsPerPage = 5; // Items per page
   const navigate = useNavigate();
 
-  // Extract category name from the first item in the news list
+  const itemsPerPage = 5;
+  const currentPage = parseInt(page || "1", 10);
+
   const actualCategoryName =
     newsList.length > 0 ? newsList[0].category : categoryName;
 
@@ -52,7 +55,6 @@ const NewList = () => {
         const response = await fetch("/data/news.json");
         const data: NewsItem[] = await response.json();
 
-        // Normalize and filter based on formatted categoryName
         const formattedCategoryName = categoryName
           ?.replace(/-/g, " ")
           .normalize("NFD")
@@ -67,7 +69,6 @@ const NewList = () => {
               .replace(/[\u0300-\u036f]/g, "") === formattedCategoryName
         );
 
-        // Get the 4 newest news items (largest IDs)
         const sortedNews = [...data].sort((a, b) => b.id - a.id);
         setNewestNews(sortedNews.slice(0, 4));
 
@@ -82,16 +83,15 @@ const NewList = () => {
     fetchNews();
   }, [categoryName]);
 
-  // Handle pagination
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentNews = newsList.slice(startIndex, startIndex + itemsPerPage);
 
   const handleNextPage = () => {
-    setCurrentPage((prev) => prev + 1);
+    navigate(`/news/${categoryName}/${currentPage + 1}`);
   };
 
   const handlePreviousPage = () => {
-    setCurrentPage((prev) => prev - 1);
+    navigate(`/news/${categoryName}/${currentPage - 1}`);
   };
 
   return (
@@ -210,8 +210,8 @@ const NewList = () => {
                                 fontWeight="bold"
                                 mb={1}
                                 sx={{
-                                  wordWrap: "break-word", // Allow words to break if needed
-                                  hyphens: "auto", // Automatically hyphenate words when they break
+                                  wordWrap: "break-word",
+                                  hyphens: "auto",
                                 }}
                               >
                                 {newsItem.title}

@@ -37,7 +37,7 @@ const News = () => {
     const filteredNews = newsData
       .filter((news) => news.category === category)
       .sort((a, b) => b.id - a.id)
-      .slice(0, 4); // Get top 4 by ID
+      .slice(0, 4);
 
     return (
       <Box margin="20px 40px" display="flex" flexDirection="column" gap="20px">
@@ -49,7 +49,7 @@ const News = () => {
             variant="body2"
             color="text.secondary"
             sx={{ cursor: "pointer" }}
-            onClick={() => navigate(`/news/${formatCategory(category)}`)}
+            onClick={() => navigate(`/news/${formatCategory(category)}/1`)}
           >
             Thêm
           </Typography>

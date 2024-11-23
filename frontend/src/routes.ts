@@ -13,7 +13,7 @@ const routes = [
     component: News,
   },
   {
-    path: "/news/:categoryName",
+    path: "/news/:categoryName/:page",
     component: NewList,
   },
   {
