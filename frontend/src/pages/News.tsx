@@ -132,7 +132,6 @@ const News = () => {
                         "linear-gradient(45deg, rgb(220,5,90), rgb(200,5,80))",
                     },
                   }}
-                  onClick={() => navigate(`/new/${news.id}`)}
                 >
                   Nghe
                 </Button>

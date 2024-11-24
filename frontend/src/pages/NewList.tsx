@@ -33,7 +33,7 @@ const NewList = () => {
     page: string;
   }>();
   const [newsList, setNewsList] = useState<NewsItem[]>([]);
-  const [newestNews, setNewestNews] = useState<NewsItem[]>([]); // For sidebar
+  const [newestNews, setNewestNews] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -71,7 +71,7 @@ const NewList = () => {
               .replace(/[\u0300-\u036f]/g, "") === formattedCategoryName
         );
 
-        const sortedNews = [...data].sort((a, b) => b.id - a.id);
+        const sortedNews = filteredNews.sort((a, b) => b.id - a.id);
         setNewestNews(sortedNews.slice(0, 4));
 
         setNewsList(filteredNews);

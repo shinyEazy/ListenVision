@@ -31,16 +31,19 @@ const New = () => {
       try {
         const response = await fetch("../data/news.json");
         const data: NewData[] = await response.json();
-        const foundBook = data.find((news) => news.id === Number(id));
+
+        // Sort the data by ID in descending order to get the latest news first
+        const sortedData = [...data].sort((a, b) => b.id - a.id);
+
+        const foundBook = sortedData.find((news) => news.id === Number(id));
         setNewData(foundBook || null);
 
-        // Fetch related articles
-        const related = data
+        const related = sortedData
           .filter(
             (news) =>
               news.category === foundBook?.category && news.id !== Number(id)
           )
-          .slice(0, 4); // Show up to 4 related articles
+          .slice(0, 3);
         setRelatedNews(related);
       } catch (error) {
         console.error("Error fetching data:", error);
