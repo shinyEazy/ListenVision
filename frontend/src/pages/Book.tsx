@@ -190,14 +190,26 @@ const BookPage = () => {
               }}
             >
               <Typography
-                onClick={() => navigate("/books")}
+                onClick={() => {
+                  navigate("/books");
+                  window.scrollTo(0, 0);
+                }}
                 sx={{ cursor: "pointer" }}
               >
-                Trang chủ
+                Sách nói
               </Typography>
               <Typography>/</Typography>
               <Typography
-                onClick={() => navigate("/")}
+                onClick={() => {
+                  navigate(
+                    `/books/${newBook?.category
+                      .toLowerCase()
+                      .normalize("NFD")
+                      .replace(/[\u0300-\u036f]/g, "")
+                      .replace(/\s+/g, "-")}/1`
+                  );
+                  window.scrollTo(0, 0);
+                }}
                 sx={{ cursor: "pointer" }}
               >
                 {newBook?.category || ""}
@@ -378,11 +390,16 @@ const BookPage = () => {
                   cursor: "pointer",
                   textAlign: "center",
                   color: "#000",
-                  "&:hover img": {
+                  transition: "all 0.3s ease-in-out",
+                  ":hover": {
+                    backgroundColor: "#f4f4f4",
                     transform: "scale(1.05)",
                   },
                 }}
-                onClick={() => navigate(`/book/${book.id}`)}
+                onClick={() => {
+                  navigate(`/book/${book.id}`);
+                  window.scrollTo(0, 0);
+                }}
               >
                 <Box
                   component="img"

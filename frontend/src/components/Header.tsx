@@ -41,7 +41,7 @@ const Header = () => {
         </Typography>
         <Box>
           <TextField
-            placeholder="Search for audio news and articles"
+            placeholder="Tìm kiếm tin tức và sách nói"
             variant="outlined"
             style={{
               borderRadius: "100px",
