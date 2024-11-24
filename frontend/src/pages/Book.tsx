@@ -194,7 +194,12 @@ const BookPage = () => {
                   navigate("/books");
                   window.scrollTo(0, 0);
                 }}
-                sx={{ cursor: "pointer" }}
+                sx={{
+                  cursor: "pointer",
+                  "&:hover": {
+                    textDecoration: "underline", // Add underline on hover
+                  },
+                }}
               >
                 Sách nói
               </Typography>
@@ -210,7 +215,12 @@ const BookPage = () => {
                   );
                   window.scrollTo(0, 0);
                 }}
-                sx={{ cursor: "pointer" }}
+                sx={{
+                  cursor: "pointer",
+                  "&:hover": {
+                    textDecoration: "underline",
+                  },
+                }}
               >
                 {newBook?.category || ""}
               </Typography>
