@@ -48,10 +48,8 @@ const BookPage = () => {
   const [newBook, setNewBook] = useState<NewBook | null>(null);
   const [relatedBooks, setRelatedBooks] = useState<NewBook[]>([]);
   const [loading, setLoading] = useState(true);
-
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
-
   const [audioSource, setAudioSource] = useState<string | null>(null);
   const [currentPart, setCurrentPart] = useState<Part | null>(null);
   const [progress, setProgress] = useState(0);
@@ -75,6 +73,7 @@ const BookPage = () => {
             (news) =>
               news.category === foundBook?.category && news.id !== Number(id)
           )
+          .sort((a, b) => b.id - a.id)
           .slice(0, 2);
         setRelatedBooks(related);
 
@@ -370,11 +369,12 @@ const BookPage = () => {
           >
             Sách nói tương tự
           </Typography>
+          {/* Sách nói tương tự */}
           <Box
             sx={{
               display: "flex",
-              flexWrap: "wrap",
               gap: "20px",
+              flexWrap: "wrap",
             }}
           >
             {relatedBooks.map((book) => (

@@ -1,4 +1,4 @@
-import { Box, Typography, Card, CardMedia, Button } from "@mui/material";
+import { Box, Typography, Card, CardMedia, Button, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -10,6 +10,7 @@ interface Book {
   author: string;
   image: string;
   description: string;
+  category: string;
 }
 
 const Books = () => {
@@ -109,95 +110,90 @@ const Books = () => {
         {loading && <Typography>Loading...</Typography>}
         {error && <Typography color="error">{error}</Typography>}
         {!loading && !error && (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              gap: "20px",
-            }}
-          >
-            {booksData.map((book) => (
-              <Card
-                onClick={() => navigate(`/book/${book.id}`)}
-                key={book.id}
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  padding: "16px",
-                  borderRadius: "12px",
-                  boxShadow: 2,
-                  maxWidth: "200px",
-                  cursor: "pointer",
-                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                  "&:hover": {
-                    transform: "translateY(-5px)",
-                    boxShadow: 4,
-                  },
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  height="180"
-                  image={book.image}
-                  alt={book.title}
-                  sx={{
-                    borderRadius: "8px",
-                    mb: 2,
-                    height: "280px",
-                    objectFit: "cover",
-                  }}
-                />
-                <Typography
-                  variant="h6"
-                  fontWeight="bold"
-                  mb={1}
-                  sx={{
-                    display: "-webkit-box",
-                    WebkitBoxOrient: "vertical",
-                    WebkitLineClamp: 2,
-                    overflow: "hidden",
-                  }}
-                >
-                  {book.title}
-                </Typography>
-                <Typography
-                  variant="body1"
-                  color="text.secondary"
-                  mb={2}
-                  sx={{
-                    display: "-webkit-box",
-                    WebkitBoxOrient: "vertical",
-                    WebkitLineClamp: 2,
-                    overflow: "hidden",
-                  }}
-                >
-                  {book.author}
-                </Typography>
-                <Box mt="auto" display="flex" justifyContent="flex-end">
-                  <Button
-                    variant="contained"
+          <Grid container spacing={3}>
+            {booksData
+              .sort((a, b) => b.id - a.id)
+              .map((book) => (
+                <Grid item xs={12} sm={6} md={4} lg={2.4} key={book.id}>
+                  <Card
+                    onClick={() => navigate(`/book/${book.id}`)}
                     sx={{
-                      background:
-                        "linear-gradient(45deg, rgb(252,6,106), rgb(220,5,90))",
-                      color: "#fff",
-                      borderRadius: "30px",
-                      fontSize: "1rem",
-                      padding: "4px 20px",
-                      textTransform: "none",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "space-between",
+                      padding: "16px",
+                      borderRadius: "12px",
+                      boxShadow: 2,
+                      cursor: "pointer",
+                      transition: "transform 0.3s ease, box-shadow 0.3s ease",
                       "&:hover": {
-                        background:
-                          "linear-gradient(45deg, rgb(220,5,90), rgb(200,5,80))",
+                        transform: "translateY(-5px)",
+                        boxShadow: 4,
                       },
                     }}
-                    onClick={() => navigate(`/book/${book.id}`)}
                   >
-                    Nghe
-                  </Button>
-                </Box>
-              </Card>
-            ))}
-          </Box>
+                    <CardMedia
+                      component="img"
+                      height="180"
+                      image={book.image}
+                      alt={book.title}
+                      sx={{
+                        borderRadius: "8px",
+                        mb: 2,
+                        height: "280px",
+                        objectFit: "cover",
+                      }}
+                    />
+                    <Typography
+                      variant="h6"
+                      fontWeight="bold"
+                      mb={1}
+                      sx={{
+                        display: "-webkit-box",
+                        WebkitBoxOrient: "vertical",
+                        WebkitLineClamp: 2,
+                        overflow: "hidden",
+                      }}
+                    >
+                      {book.title}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      color="text.secondary"
+                      mb={2}
+                      sx={{
+                        display: "-webkit-box",
+                        WebkitBoxOrient: "vertical",
+                        WebkitLineClamp: 2,
+                        overflow: "hidden",
+                      }}
+                    >
+                      {book.author}
+                    </Typography>
+                    <Box mt="auto" display="flex" justifyContent="flex-end">
+                      <Button
+                        variant="contained"
+                        sx={{
+                          background:
+                            "linear-gradient(45deg, rgb(252,6,106), rgb(220,5,90))",
+                          color: "#fff",
+                          borderRadius: "30px",
+                          fontSize: "1rem",
+                          padding: "4px 20px",
+                          textTransform: "none",
+                          "&:hover": {
+                            background:
+                              "linear-gradient(45deg, rgb(220,5,90), rgb(200,5,80))",
+                          },
+                        }}
+                      >
+                        Nghe
+                      </Button>
+                    </Box>
+                  </Card>
+                </Grid>
+              ))}
+          </Grid>
         )}
       </Box>
       <Footer />

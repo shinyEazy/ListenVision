@@ -3,28 +3,22 @@ import {
   Typography,
   Card,
   CardMedia,
-  CardContent,
-  CardActionArea,
   CircularProgress,
   Button,
-  Stack,
   Grid,
-  Divider,
 } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 interface BooksItem {
   id: number;
-  category: string;
   title: string;
+  author: string;
   image: string;
-  time: string;
-  content: string;
+  description: string;
+  category: string;
 }
 
 const BookList = () => {
@@ -33,11 +27,9 @@ const BookList = () => {
     page: string;
   }>();
   const [booksList, setBooksList] = useState<BooksItem[]>([]);
-  const [newestBooks, setNewestBooks] = useState<BooksItem[]>([]); // For sidebar
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const itemsPerPage = 5;
   const currentPage = parseInt(page || "1", 10);
 
   const actualCategoryName =
@@ -72,12 +64,9 @@ const BookList = () => {
               .replace(/[\u0300-\u036f]/g, "") === formattedCategoryName
         );
 
-        const sortedBooks = [...data].sort((a, b) => b.id - a.id);
-        setNewestBooks(sortedBooks.slice(0, 4));
-
         setBooksList(filteredBooks);
       } catch (error) {
-        console.error("Error fetching news:", error);
+        console.error("Error fetching books:", error);
       } finally {
         setLoading(false);
       }
@@ -85,19 +74,6 @@ const BookList = () => {
 
     fetchBooks();
   }, [categoryName]);
-
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentBooks = booksList.slice(startIndex, startIndex + itemsPerPage);
-
-  const handleNextPage = () => {
-    navigate(`/books/${categoryName}/${currentPage + 1}`);
-    window.scrollTo(0, 0);
-  };
-
-  const handlePreviousPage = () => {
-    navigate(`/books/${categoryName}/${currentPage - 1}`);
-    window.scrollTo(0, 0);
-  };
 
   return (
     <Box>
@@ -147,199 +123,103 @@ const BookList = () => {
           </Typography>
         </Typography>
 
-        <Grid container spacing={3}>
-          {/* Main Content */}
-          <Grid item xs={12} md={8}>
-            <Box>
-              {/* Loading Spinner */}
-              {loading ? (
-                <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
-                  <CircularProgress />
-                </Box>
-              ) : (
-                <>
-                  {/* Books Cards */}
-                  <Stack
-                    spacing={4}
-                    sx={{ width: "100%", borderRadius: "0px", border: "none" }}
-                  >
-                    {currentBooks.map((booksItem) => (
+        <Box sx={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}>
+          {/* Loading Spinner */}
+          {loading ? (
+            <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
+              <CircularProgress />
+            </Box>
+          ) : (
+            <>
+              {/* Books Grid */}
+              <Grid container spacing={3}>
+                {booksList
+                  .sort((a, b) => b.id - a.id)
+                  .map((book) => (
+                    <Grid item xs={12} sm={6} md={4} lg={2.4} key={book.id}>
                       <Card
-                        key={booksItem.id}
+                        onClick={() => navigate(`/book/${book.id}`)}
                         sx={{
-                          maxWidth: "100%",
-                          borderRadius: "0",
                           display: "flex",
-                          flexDirection: "row",
-                          alignItems: "flex-start",
-                          border: "none",
-                          boxShadow: "none",
-                          transition: "transform 0.3s",
+                          flexDirection: "column",
+                          justifyContent: "space-between",
+                          padding: "16px",
+                          borderRadius: "12px",
+                          boxShadow: 2,
+                          cursor: "pointer",
+                          transition:
+                            "transform 0.3s ease, box-shadow 0.3s ease",
                           "&:hover": {
-                            transform: "scale(1.03)",
-                            cursor: "pointer",
+                            transform: "translateY(-5px)",
+                            boxShadow: 4,
                           },
                         }}
-                        onClick={() => navigate(`/book/${booksItem.id}`)}
                       >
-                        <CardActionArea
+                        <CardMedia
+                          component="img"
+                          height="180"
+                          image={book.image}
+                          alt={book.title}
                           sx={{
-                            display: "flex",
-                            flexDirection: "row",
-                            alignItems: "flex-start",
-                            maxWidth: "100%",
-                            width: "100%",
+                            borderRadius: "8px",
+                            mb: 2,
+                            height: "280px",
+                            objectFit: "cover",
+                          }}
+                        />
+                        <Typography
+                          variant="h6"
+                          fontWeight="bold"
+                          mb={1}
+                          sx={{
+                            display: "-webkit-box",
+                            WebkitBoxOrient: "vertical",
+                            WebkitLineClamp: 2,
+                            overflow: "hidden",
                           }}
                         >
-                          {/* Image */}
-                          <CardMedia
-                            component="img"
+                          {book.title}
+                        </Typography>
+                        <Typography
+                          variant="body1"
+                          color="text.secondary"
+                          mb={2}
+                          sx={{
+                            display: "-webkit-box",
+                            WebkitBoxOrient: "vertical",
+                            WebkitLineClamp: 2,
+                            overflow: "hidden",
+                          }}
+                        >
+                          {book.author}
+                        </Typography>
+                        <Box mt="auto" display="flex" justifyContent="flex-end">
+                          <Button
+                            variant="contained"
                             sx={{
-                              width: "250px",
-                              maxWidth: "250px",
-                              objectFit: "cover",
-                            }}
-                            image={booksItem.image}
-                            alt={booksItem.title}
-                          />
-                          {/* Content */}
-                          <CardContent
-                            sx={{
-                              flex: 1,
-                              padding: "0 16px",
-                              display: "flex",
-                              flexDirection: "column",
-                              justifyContent: "flex-start",
-                              width: "500px",
+                              background:
+                                "linear-gradient(45deg, rgb(252,6,106), rgb(220,5,90))",
+                              color: "#fff",
+                              borderRadius: "30px",
+                              fontSize: "1rem",
+                              padding: "4px 20px",
+                              textTransform: "none",
+                              "&:hover": {
+                                background:
+                                  "linear-gradient(45deg, rgb(220,5,90), rgb(200,5,80))",
+                              },
                             }}
                           >
-                            <Box sx={{ width: "100%" }}>
-                              <Typography
-                                variant="h5"
-                                fontWeight="bold"
-                                mb={1}
-                                sx={{
-                                  wordWrap: "break-word",
-                                  hyphens: "auto",
-                                }}
-                              >
-                                {booksItem.title}
-                              </Typography>
-
-                              <Typography
-                                variant="body1"
-                                color="text.secondary"
-                                sx={{
-                                  display: "-webkit-box",
-                                  WebkitBoxOrient: "vertical",
-                                  WebkitLineClamp: 3,
-                                  overflow: "hidden",
-                                  wordWrap: "break-word",
-                                }}
-                              >
-                                {truncateText(booksItem.content, 30)}
-                              </Typography>
-                            </Box>
-                          </CardContent>
-                        </CardActionArea>
+                            Nghe
+                          </Button>
+                        </Box>
                       </Card>
-                    ))}
-                  </Stack>
-
-                  {/* Pagination */}
-                  <Stack
-                    direction="row"
-                    spacing={2}
-                    justifyContent="center"
-                    alignItems="center"
-                    mt={4}
-                  >
-                    {/* Render the Previous button only if it's not disabled */}
-                    {currentPage > 1 && (
-                      <Button
-                        variant="outlined"
-                        onClick={handlePreviousPage}
-                        sx={{
-                          color: "rgb(252,6,106)",
-                          border: "2px solid rgb(252,6,106)",
-                          backgroundColor: "white",
-                          "&:hover": {
-                            backgroundColor: "rgb(252,6,106)",
-                            color: "white",
-                            border: "2px solid rgb(252,6,106)",
-                          },
-                        }}
-                      >
-                        <ArrowBackIosNewIcon />
-                      </Button>
-                    )}
-                    {currentPage === 1 && (
-                      <Button
-                        variant="outlined"
-                        sx={{
-                          color: "white",
-                          border: "none",
-                          backgroundColor: "white",
-                          cursor: "default",
-                          "&:hover": {
-                            backgroundColor: "white",
-                            color: "white",
-                            border: "white",
-                          },
-                        }}
-                      >
-                        <ArrowBackIosNewIcon />
-                      </Button>
-                    )}
-                    <Typography>
-                      Page {currentPage} of{" "}
-                      {Math.ceil(booksList.length / itemsPerPage)}
-                    </Typography>
-                    {/* Render the Next button only if it's not disabled */}
-                    {currentPage <
-                      Math.ceil(booksList.length / itemsPerPage) && (
-                      <Button
-                        variant="outlined"
-                        onClick={handleNextPage}
-                        sx={{
-                          color: "rgb(252,6,106)",
-                          border: "2px solid rgb(252,6,106)",
-                          backgroundColor: "white",
-                          "&:hover": {
-                            backgroundColor: "rgb(252,6,106)",
-                            color: "white",
-                            border: "2px solid rgb(252,6,106)",
-                          },
-                        }}
-                      >
-                        <ArrowForwardIosIcon />
-                      </Button>
-                    )}{" "}
-                    {currentPage ===
-                      Math.ceil(booksList.length / itemsPerPage) && (
-                      <Button
-                        variant="outlined"
-                        sx={{
-                          color: "white",
-                          border: "none",
-                          backgroundColor: "white",
-                          cursor: "default",
-                          "&:hover": {
-                            backgroundColor: "white",
-                            color: "white",
-                            border: "white",
-                          },
-                        }}
-                      >
-                        <ArrowForwardIosIcon />
-                      </Button>
-                    )}
-                  </Stack>
-                </>
-              )}
-            </Box>
-          </Grid>
-        </Grid>
+                    </Grid>
+                  ))}
+              </Grid>
+            </>
+          )}
+        </Box>
       </Box>
       <Footer />
     </Box>
