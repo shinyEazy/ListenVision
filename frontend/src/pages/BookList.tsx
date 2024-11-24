@@ -22,26 +22,15 @@ interface BooksItem {
 }
 
 const BookList = () => {
-  const { categoryName, page } = useParams<{
+  const { categoryName } = useParams<{
     categoryName: string;
-    page: string;
   }>();
   const [booksList, setBooksList] = useState<BooksItem[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const currentPage = parseInt(page || "1", 10);
-
   const actualCategoryName =
     booksList.length > 0 ? booksList[0].category : categoryName;
-
-  const truncateText = (text: string | undefined, wordLimit: number) => {
-    if (!text) return "";
-    const words = text.split(" ");
-    return words.length > wordLimit
-      ? words.slice(0, wordLimit).join(" ") + "..."
-      : text;
-  };
 
   useEffect(() => {
     const fetchBooks = async () => {

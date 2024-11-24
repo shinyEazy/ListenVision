@@ -47,18 +47,12 @@ const BookPage = () => {
   const { id } = useParams<{ id: string }>();
   const [newBook, setNewBook] = useState<NewBook | null>(null);
   const [relatedBooks, setRelatedBooks] = useState<NewBook[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [audioSource, setAudioSource] = useState<string | null>(null);
   const [currentPart, setCurrentPart] = useState<Part | null>(null);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(null);
-
-  const togglePlay = () => {
-    setIsPlaying(!isPlaying);
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,7 +78,6 @@ const BookPage = () => {
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
-        setLoading(false);
       }
     };
 
