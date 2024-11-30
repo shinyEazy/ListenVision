@@ -3,6 +3,13 @@ import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
+// voice control import
+import { useRef } from "react";
+import { setIsDemandedReducer } from "store/slices/isDemandedSlice";
+import { useSelector, useDispatch } from 'react-redux'
+import { RootState } from "store/store";
+import MicStatus from "components/MicStatus";
+import { checkTranscript } from "utils/checkTranscript";
 
 interface Book {
   id: number;
@@ -48,6 +55,102 @@ const Books = () => {
     "Giáo Dục",
     "Thiếu Nhi",
   ];
+
+  // --- voice control code
+  const isDemanded = useSelector((state: RootState) => state.isDemanded.isDemanded);
+  const dispatch = useDispatch();
+  const setIsDemanded = (value: boolean) => {
+    dispatch(setIsDemandedReducer(value))
+  }
+  const [transcript, setTranscript] = useState('');
+  const recognitionRef = useRef(null);
+  const [isEnded, setIsEnded] = useState(false);
+  const [isListening, setIsListening] = useState(true);
+  const [hasScrolledDown, setHasScrolledDown] = useState(false)
+  const [hasScrolledUp, setHasScrolledUp] = useState(false)
+  useEffect(() => {
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+      alert('Trình duyệt của bạn không hỗ trợ Speech Recognition');
+      setIsListening(false)
+      return;
+    }
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognitionRef.current = recognition;
+    recognition.continuous = true; 
+    recognition.interimResults = true; 
+    recognition.lang = 'vi-VN';
+    recognition.onresult = (event:any) => {
+      const lastResultIndex = event.results.length - 1;
+      const transcript = event.results[lastResultIndex][0].transcript.toLowerCase().trim();
+      setTranscript(transcript);
+      if (checkTranscript(transcript, "bắt đầu", 2)) {
+        setIsDemanded(true);
+        console.log('Đã bắt đầu lắng');
+      }
+      if(checkTranscript(transcript, "dừng", 1) || checkTranscript(transcript, "rừng", 1) || checkTranscript(transcript, "đừng", 1)) {
+          setIsDemanded(false);
+          console.log('Đã dừng lắng nghe')
+      }
+      if (isDemanded) {
+        if (checkTranscript(transcript, "trang chủ", 2)) {
+          navigate('/')
+        }
+         // Cuộn xuống và lên một đoạn 
+         if (checkTranscript(transcript, "xuống", 1)) {
+          if(!hasScrolledDown) {
+            window.scrollBy({
+              top: 200, // Số pixel muốn cuộn
+              behavior: 'smooth' // Hiệu ứng cuộn mượt
+            });
+            console.log("đã cuộn xuống");
+            setHasScrolledDown(true)
+            setTimeout(() => {
+              setHasScrolledDown(false);  // Đặt lại giá trị sau 2 giây
+            }, 3000); 
+          }
+        }
+        if (checkTranscript(transcript, "lên", 1)) {
+          if(!hasScrolledUp) {
+            window.scrollBy({
+              top: -200, // Số pixel muốn cuộn
+              behavior: 'smooth' // Hiệu ứng cuộn mượt
+            });
+            console.log("đã cuộn lên");
+            setHasScrolledUp(true)
+            setTimeout(() => {
+              setHasScrolledUp(false);  // Đặt lại giá trị sau 2 giây
+            }, 3000); 
+          }
+        }
+        // Cuộn đến đầu trang và cuối trang
+        if (checkTranscript(transcript, "đầu trang", 2)) {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        }
+        if (checkTranscript(transcript, "cuối trang", 2)) {
+          window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: 'smooth'
+          });
+        }
+      }
+    }
+    recognition.onend = () => {
+      console.log("Ended");
+      setIsEnded(!isEnded)
+    }
+    recognition.start();
+    return () => {
+      if (recognitionRef.current) {
+        recognition.stop();
+        recognitionRef.current = null;
+      }
+    };
+  }, [isDemanded, isEnded, hasScrolledDown, hasScrolledUp])
+  // --- end voice control code
 
   return (
     <Box>
@@ -196,6 +299,7 @@ const Books = () => {
           </Grid>
         )}
       </Box>
+      <MicStatus isListening={isListening} />
       <Footer />
     </Box>
   );

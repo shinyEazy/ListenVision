@@ -10,6 +10,14 @@ import {
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+// voice control import
+import { useRef } from "react";
+import { setIsDemandedReducer } from "store/slices/isDemandedSlice";
+import { useSelector, useDispatch } from 'react-redux'
+import { RootState } from "store/store";
+import MicStatus from "components/MicStatus";
+import { checkTranscript } from "utils/checkTranscript";
+import { useNavigate } from "react-router-dom";
 
 interface NewData {
   id: number;
@@ -21,6 +29,7 @@ interface NewData {
 }
 
 const New = () => {
+  
   const { id } = useParams<{ id: string }>();
   const [newData, setNewData] = useState<NewData | null>(null);
   const [relatedNews, setRelatedNews] = useState<NewData[]>([]);
@@ -75,7 +84,6 @@ const New = () => {
         Article not found.
       </Typography>
     );
-
   const paragraphs = newData.content
     .split("\n")
     .filter((paragraph) => paragraph.trim() !== "");
@@ -223,6 +231,7 @@ const New = () => {
           </Box>
         </Box>
       )}
+      {/*<MicStatus isListening={isListening} /> */}
       <Footer />
     </Box>
   );
