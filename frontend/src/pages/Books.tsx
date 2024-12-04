@@ -38,15 +38,12 @@ const Books = () => {
   }, []);
 
   const genres = [
+    "Tự Truyện",
     "Tài Chính",
-    "Khoa Học",
-    "Lịch Sử",
-    "Tâm Lý",
+    "Tư Duy",
+    "Kỹ Năng Sống",
     "Công Nghệ",
-    "Trinh Thám",
-    "Sức Khỏe",
-    "Giáo Dục",
-    "Thiếu Nhi",
+    "Khởi Nghiệp",
   ];
 
   return (
@@ -118,6 +115,7 @@ const Books = () => {
                   <Card
                     onClick={() => navigate(`/book/${book.id}`)}
                     sx={{
+                      minHeight: "93%",
                       display: "flex",
                       flexDirection: "column",
                       justifyContent: "space-between",

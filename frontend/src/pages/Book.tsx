@@ -226,13 +226,12 @@ const BookPage = () => {
               </Typography>
             </Typography>
 
-            <Typography variant="subtitle2" display="flex" alignItems="center">
+            {/* <Typography variant="subtitle2" display="flex" alignItems="center">
               <FontAwesomeIcon
                 icon={faClock}
                 style={{ fontSize: "1.1rem", marginRight: "8px" }}
-              />{" "}
-              4 giờ 1 phút
-            </Typography>
+              />
+            </Typography> */}
 
             {/* Buttons */}
             <Box sx={{ margin: "20px 0", display: "flex", gap: "20px" }}>

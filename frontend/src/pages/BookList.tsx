@@ -129,6 +129,7 @@ const BookList = () => {
                       <Card
                         onClick={() => navigate(`/book/${book.id}`)}
                         sx={{
+                          minHeight: "93%",
                           display: "flex",
                           flexDirection: "column",
                           justifyContent: "space-between",
