@@ -4,6 +4,14 @@ import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
+interface NewsItem {
+  id: number;
+  category: string;
+  title: string;
+  content: string;
+  image: string;
+}
+
 const News = () => {
   const formatCategory = (category: string) => {
     return category
@@ -14,7 +22,7 @@ const News = () => {
   };
 
   const navigate = useNavigate();
-  const [newsData, setNewsData] = useState([]);
+  const [newsData, setNewsData] = useState<NewsItem[]>([]);
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -33,7 +41,7 @@ const News = () => {
     fetchNews();
   }, []);
 
-  const renderNewsByCategory = (category) => {
+  const renderNewsByCategory = (category: string) => {
     const filteredNews = newsData
       .filter((news) => news.category === category)
       .sort((a, b) => b.id - a.id)
@@ -154,9 +162,9 @@ const News = () => {
     >
       <Header />
       {/* Render News Sections */}
-      {["Thời sự", "Thế giới", "Kinh tế"].map((category) =>
-        renderNewsByCategory(category)
-      )}
+      {["Thời sự", "Thế giới", "Kinh tế"].map((category) => (
+        <Box key={category}>{renderNewsByCategory(category)}</Box>
+      ))}
       <Footer />
     </Box>
   );
