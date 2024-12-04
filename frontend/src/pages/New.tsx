@@ -18,6 +18,7 @@ interface NewData {
   time: string;
   content: string;
   image: string;
+  url: string;
 }
 
 const New = () => {
@@ -128,22 +129,19 @@ const New = () => {
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
+        ></Box>
+        <Box
+          sx={{
+            flexDirection: "column",
+            alignItems: "center",
+            marginBottom: "10px",
+          }}
         >
-          <CardMedia
-            component="video"
-            controls
-            src={newData.video}
-            sx={{
-              position: "absolute",
-              height: "80px",
-              bottom: "0",
-              left: "0",
-              width: "100%",
-              border: "1px solid #ddd",
-            }}
-          />
+          <audio controls style={{ width: "100%" }}>
+            <source src={newData.url} type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
         </Box>
-
         {paragraphs.map((paragraph, index) => (
           <Typography key={index} fontSize="1.3rem" paragraph>
             {paragraph}
