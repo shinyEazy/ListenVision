@@ -3,6 +3,8 @@ import "../styles.css";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import HomepageVC from "components/voicecontrol/homepageVC";
+
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -143,6 +145,7 @@ const HomePage = () => {
           Sách nói nổi bật
         </Button>
       </Box>
+      <HomepageVC />
       <Footer />
     </Box>
   );

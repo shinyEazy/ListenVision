@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
+
 interface NewData {
   id: number;
   category: string;
@@ -22,6 +23,7 @@ interface NewData {
 }
 
 const New = () => {
+  
   const { id } = useParams<{ id: string }>();
   const [newData, setNewData] = useState<NewData | null>(null);
   const [relatedNews, setRelatedNews] = useState<NewData[]>([]);
@@ -76,7 +78,6 @@ const New = () => {
         Article not found.
       </Typography>
     );
-
   const paragraphs = newData.content
     .split("\n")
     .filter((paragraph) => paragraph.trim() !== "");

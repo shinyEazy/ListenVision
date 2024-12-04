@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import NewsVC from "components/voicecontrol/newsVC";
 
 interface NewsItem {
   id: number;
@@ -165,6 +166,7 @@ const News = () => {
       {["Thời sự", "Thế giới", "Kinh tế"].map((category) => (
         <Box key={category}>{renderNewsByCategory(category)}</Box>
       ))}
+      <NewsVC />
       <Footer />
     </Box>
   );

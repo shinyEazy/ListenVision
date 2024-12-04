@@ -2,8 +2,8 @@ import { Box, Typography, Card, CardMedia, Button, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom"; 
+import BooksVC from "components/voicecontrol/booksVC";
 interface Book {
   id: number;
   title: string;
@@ -15,7 +15,6 @@ interface Book {
 
 const Books = () => {
   const navigate = useNavigate();
-
   const [booksData, setBooksData] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -188,12 +187,16 @@ const Books = () => {
                         Nghe
                       </Button>
                     </Box>
+                    <div>
+                      ID: {book.id}
+                    </div>
                   </Card>
                 </Grid>
               ))}
           </Grid>
         )}
       </Box>
+      <BooksVC />
       <Footer />
     </Box>
   );
