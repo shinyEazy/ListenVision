@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import NewsVC from "components/voicecontrol/newsVC";
 
 const News = () => {
   const formatCategory = (category: string) => {
@@ -157,6 +158,7 @@ const News = () => {
       {["Thời sự", "Thế giới", "Kinh tế"].map((category) =>
         renderNewsByCategory(category)
       )}
+      <NewsVC />
       <Footer />
     </Box>
   );

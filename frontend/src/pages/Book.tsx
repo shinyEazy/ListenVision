@@ -23,6 +23,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 import { faCirclePlay } from "@fortawesome/free-solid-svg-icons";
 import { useRef } from "react";
+import SingularBookVC from "components/voicecontrol/singularBookVC";
 
 interface Part {
   part_id: number;
@@ -543,6 +544,7 @@ const BookPage = () => {
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
       />
+      <SingularBookVC />
     </Box>
   );
 };

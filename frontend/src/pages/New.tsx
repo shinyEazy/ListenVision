@@ -10,14 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-// voice control import
-import { useRef } from "react";
-import { setIsDemandedReducer } from "store/slices/isDemandedSlice";
-import { useSelector, useDispatch } from 'react-redux'
-import { RootState } from "store/store";
-import MicStatus from "components/MicStatus";
-import { checkTranscript } from "utils/checkTranscript";
-import { useNavigate } from "react-router-dom";
+
 
 interface NewData {
   id: number;
@@ -231,7 +224,6 @@ const New = () => {
           </Box>
         </Box>
       )}
-      {/*<MicStatus isListening={isListening} /> */}
       <Footer />
     </Box>
   );
