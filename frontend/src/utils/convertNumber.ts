@@ -22,9 +22,26 @@ const convertNumToString = (num: number): string => {
             return "chín";
         case 10:
             return "mười";
+        case 11:
+            return "mười một";
+        case 12:
+            return "mười hai";
+        case 13:
+            return "mười ba";
+        case 14:
+            return "mười bốn";
+        case 15:
+            return "mười năm";
+        case 16:
+            return "mười sáu";
+        case 17:
+            return "mười bảy";
+        case 18:
+            return "mười tám";
         default:
             return "Số ngoài phạm vi";
     }
 };
+
 
 export {convertNumToString}

@@ -4,11 +4,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import MicStatus from "components/MicStatus";
 import { checkTranscript } from "utils/checkTranscript";
 import { useNavigate } from "react-router-dom";
-import { convertNumToString } from "utils/convertNumber";
 
-const NewsVC = () => {
-    const category = ['thời sự', 'thế giới', 'kinh tế'];
-
+const SingularNewVC = ({audioRef}) => {
     const navigate = useNavigate();
      // --- voice control code
     const isDemanded = useSelector((state) => state.isDemanded.isDemanded);
@@ -20,8 +17,9 @@ const NewsVC = () => {
     const recognitionRef = useRef(null);
     const [isEnded, setIsEnded] = useState(false);
     const [isListening, setIsListening] = useState(true);
-    
-    useEffect(() => {   
+
+    useEffect(() => {
+        
         if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
             alert('Trình duyệt của bạn không hỗ trợ Speech Recognition');
             setIsListening(false)
@@ -37,41 +35,40 @@ const NewsVC = () => {
             const lastResultIndex = event.results.length - 1;
             const transcript = event.results[lastResultIndex][0].transcript.toLowerCase().trim();
             setTranscript(transcript);
-            if (checkTranscript(transcript, "bắt đầu", 2)) {
-                setIsDemanded(true);
-            }
-            if(checkTranscript(transcript, "dừng", 1) || checkTranscript(transcript, "rừng", 1) || checkTranscript(transcript, "đừng", 1)) {
-                setIsDemanded(false);
-            }
             if (isDemanded) {
                 if (checkTranscript(transcript, "trang chủ", 2)) {
                     navigate('/')
                 }
+                if (checkTranscript(transcript, "tin tức", 2)) {
+                    navigate('/news')
+                }
                 if (checkTranscript(transcript, "sách", 1) || checkTranscript(transcript, "xách", 1)) {
                     navigate('/books')
                 }
-                for(let i = 0; i < category.length; i++) {
-                    if(transcript.includes(category[i])) {
-                        const formatedCategory = category[i] .toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-");
-                        navigate(`/news/${formatedCategory}/1`)
-                        recognition.stop();
-                        break;
+                if(transcript.includes("tắt")) {
+                    if (audioRef.current) {
+                        audioRef.current.pause(); // Dừng phát âm thanh
+                    }
+                }
+                if(transcript.includes('nghe')) {
+                    if (audioRef.current) {
+                        audioRef.current.play(); // Thao tác với thẻ audio
                     }
                 }
                 // Cuộn xuống và lên một đoạn 
                 if (checkTranscript(transcript, "xuống", 1)) {
-                        window.scrollBy({
-                            top: 150, 
-                            behavior: 'smooth' 
-                        });
-                        recognition.stop();
+                    window.scrollBy({
+                        top: 150, 
+                        behavior: 'smooth' 
+                    });
+                    recognition.stop();
                 }
                 if (checkTranscript(transcript, "lên", 1)) {
-                        window.scrollBy({
-                            top: -200, 
-                            behavior: 'smooth' 
-                        });
-                        recognition.stop();
+                    window.scrollBy({
+                        top: -200, 
+                        behavior: 'smooth' 
+                    });
+                    recognition.stop();
                 }
                 // Cuộn đến đầu trang và cuối trang
                 if (checkTranscript(transcript, "đầu trang", 2)) {
@@ -86,6 +83,12 @@ const NewsVC = () => {
                         behavior: 'smooth'
                     });
                 }
+            }
+            if (checkTranscript(transcript, "bắt đầu", 2)) {
+                setIsDemanded(true);
+            }
+            if(checkTranscript(transcript, "dừng", 1) || checkTranscript(transcript, "rừng", 1) || checkTranscript(transcript, "đừng", 1)) {
+                setIsDemanded(false);
             }
         }
         recognition.onend = () => {
@@ -106,4 +109,4 @@ const NewsVC = () => {
     )
 }
 
-export default NewsVC;
+export default SingularNewVC;

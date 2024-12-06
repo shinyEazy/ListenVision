@@ -5,7 +5,7 @@ import MicStatus from "components/MicStatus";
 import { checkTranscript } from "utils/checkTranscript";
 import { useNavigate } from "react-router-dom";
 
-const SingularBookVC = () => {
+const SingularBookVC = ({audioRef}) => {
     const navigate = useNavigate();
      // --- voice control code
     const isDemanded = useSelector((state) => state.isDemanded.isDemanded);
@@ -34,12 +34,6 @@ const SingularBookVC = () => {
             const lastResultIndex = event.results.length - 1;
             const transcript = event.results[lastResultIndex][0].transcript.toLowerCase().trim();
             setTranscript(transcript);
-            if (checkTranscript(transcript, "bắt đầu", 2)) {
-                setIsDemanded(true);
-            }
-            if(checkTranscript(transcript, "dừng", 1) || checkTranscript(transcript, "rừng", 1) || checkTranscript(transcript, "đừng", 1)) {
-                setIsDemanded(false);
-            }
             if (isDemanded) {
                 if (checkTranscript(transcript, "trang chủ", 2)) {
                     navigate('/')
@@ -47,8 +41,20 @@ const SingularBookVC = () => {
                 if (checkTranscript(transcript, "tin tức", 2)) {
                     navigate('/news')
                 }
-                if (checkTranscript(transcript, "sách", 2)) {
+                if (checkTranscript(transcript, "sách", 1) || checkTranscript(transcript, "xách", 1)) {
                     navigate('/books')
+                }
+                if(transcript.includes('nghe')) {
+                    if (audioRef.current.paused) {
+                        audioRef.current.play();
+                        recognition.stop();
+                    }
+                }
+                if(transcript.includes("tắt")) {
+                    if (!audioRef.current.paused) {
+                        audioRef.current.pause();
+                        recognition.stop();
+                    }
                 }
                 // Cuộn xuống và lên một đoạn 
                 if (checkTranscript(transcript, "xuống", 1)) {
@@ -78,6 +84,12 @@ const SingularBookVC = () => {
                         behavior: 'smooth'
                     });
                 }
+            }
+            if (checkTranscript(transcript, "bắt đầu", 2)) {
+                setIsDemanded(true);
+            }
+            if(checkTranscript(transcript, "dừng", 1) || checkTranscript(transcript, "rừng", 1) || checkTranscript(transcript, "đừng", 1)) {
+                setIsDemanded(false);
             }
         }
         recognition.onend = () => {

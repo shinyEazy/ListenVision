@@ -493,6 +493,7 @@ const BookPage = () => {
             <IconButton sx={{ color: "#fff" }}>
               <SkipPreviousIcon />
             </IconButton>
+            {/*sound here */}
             <IconButton
               onClick={() => {
                 if (audioRef.current) {
@@ -543,7 +544,7 @@ const BookPage = () => {
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
       />
-      <SingularBookVC />
+      <SingularBookVC audioRef={audioRef}/>
     </Box>
   );
 };

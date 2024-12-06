@@ -9,19 +9,16 @@ import { convertNumToString } from "utils/convertNumber";
 const BooksVC = () => {
 
     const genres = [
+        "tự truyện",
         "tài chính",
-        "khoa học",
-        "lịch sử",
-        "tâm lý",
+        "tư duy",
+        "kỹ năng sống",
         "công nghệ",
-        "trinh thám",
-        "sức khỏe",
-        "giáo dục",
-        "thiếu nhi",
+        "khởi nghiệp",
     ];
-    let book_ids = []
+    let book_ids = [];
     let book_id_string_arr = [];
-    for(let i = 1; i <= 8; i++) {
+    for(let i = 1; i <= 18; i++) {
         book_ids.push(i);
         const str = convertNumToString(i)
         book_id_string_arr.push(str);
@@ -80,21 +77,29 @@ const BooksVC = () => {
                         )
                     }
                 }
-                for(let i = 0 ; i < book_ids.length; i++) {
+                for(let i = book_ids.length - 1 ; i >= 0; i--) {
+                    /*
                     const command = 'sách ' + book_ids[i]
                     const command_1 = 'xách ' + book_ids[i]
                     const command_2 = 'xách ' + book_id_string_arr[i]
                     const command_3 = 'sách ' + book_id_string_arr[i]
                     if(transcript.includes(command) || transcript.includes(command_1) || transcript.includes(command_2) || transcript.includes(command_3)) {
+                        console.log(`/book/${book_ids[i]}`)
                         navigate(`/book/${book_ids[i]}`)
                         recognition.stop();
                         break;
                     }
+                    */
+                   if(transcript.includes(book_ids[i].toString()) || transcript.includes(book_id_string_arr[i].toString())) {
+                        navigate(`/book/${book_ids[i]}`)
+                        recognition.stop();
+                        break;
+                   }
                 }
                 // Cuộn xuống và lên một đoạn 
                 if (checkTranscript(transcript, "xuống", 1)) {
                         window.scrollBy({
-                            top: 150, 
+                            top: 200, 
                             behavior: 'smooth' 
                         });
                         recognition.stop();
@@ -135,7 +140,7 @@ const BooksVC = () => {
     }, [isDemanded, isEnded])
     // --- end voice control code
     return (
-        <MicStatus isListening={isListening} />
+        <MicStatus isListening={isListening} />   
     )
 }
 
