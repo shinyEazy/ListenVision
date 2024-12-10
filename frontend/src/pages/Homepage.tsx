@@ -5,7 +5,6 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import HomepageVC from "components/voicecontrol/homepageVC";
 
-
 const HomePage = () => {
   const navigate = useNavigate();
 
@@ -145,6 +144,64 @@ const HomePage = () => {
           Sách nói nổi bật
         </Button>
       </Box>
+      <Box
+        id="voice-control-guide"
+        marginTop="30px"
+        padding="30px"
+        bgcolor="#f3f4f6"
+        borderRadius="12px"
+        boxShadow="0 6px 12px rgba(0, 0, 0, 0.1)"
+        textAlign="center"
+        maxWidth="800px"
+        marginX="auto"
+        border="1px solid #e0e0e0"
+      >
+        <Typography
+          fontWeight="700"
+          fontSize="1.8rem"
+          color="#2c3e50"
+          marginBottom="20px"
+        >
+          Hướng dẫn sử dụng Voice Control
+        </Typography>
+        <Typography
+          fontSize="1.1rem"
+          color="#555"
+          lineHeight="1.6"
+          marginBottom="15px"
+        >
+          - Hãy nói <b>"Bắt đầu"</b> để bắt đầu sử dụng tính năng voice control
+          và <b>Dừng</b> để tắt nó.
+          <br />- Mở hướng dẫn voice control trong các trang bằng câu lệnh{" "}
+          <b>Hướng dẫn</b> và đóng hướng dẫn bằng câu lệnh <b>Đóng</b>.
+          <br />- Hãy nói <b>"Mở Tin Tức" hay một câu có chứa "Tin Tức"</b> để
+          chuyển đến trang tin tức.
+          <br />- Nói <b>"Xem Sách Nói" hay một câu có chứa "Sách"</b> để truy
+          cập danh mục sách nổi bật.
+          <br />- Sử dụng các câu lệnh đơn giản như
+          <b> "Trang Chủ"</b> để điều hướng về trang chủ dễ dàng.
+          <br />- Các lệnh: lên, xuống, đầu trang và cuối trang để điều chỉnh
+          màn hình.
+          <br />- Ở phần <b>tin tức</b>:
+          <br />+ Truy cập tới các lĩnh vực bạn muốn với câu lệnh: tên của lĩnh
+          vực đó.
+          <br />+ Truy cập tới bài báo với câu lệnh: bài báo + ID của nó.
+          <br />- Ở phần <b>sách</b>:
+          <br />+ Truy cập tới sách bạn muốn với câu lệnh: ID của cuốn sách đó.
+          <br />- Nghe bài báo/sách với lệnh <b>"Nghe"</b> và dừng nghe với lệnh{" "}
+          <b>"Tắt"</b>
+        </Typography>
+        <Typography
+          fontSize="0.95rem"
+          color="#7f8c8d"
+          fontStyle="italic"
+          marginTop="20px"
+        >
+          * Lưu ý: Tính năng này yêu cầu truy cập microphone và hỗ trợ trình
+          duyệt hiện tại của bạn.
+        </Typography>
+      </Box>
+
       <HomepageVC />
       <Footer />
     </Box>
