@@ -6,7 +6,7 @@ import { checkTranscript } from "utils/checkTranscript";
 import { useNavigate } from "react-router-dom";
 import { convertNumToString } from "utils/convertNumber";
 
-const NewsVC = () => {
+const NewsVC = ({news_ID}) => {
     const category = ['thời sự', 'thế giới', 'kinh tế'];
 
     const navigate = useNavigate();
@@ -58,6 +58,13 @@ const NewsVC = () => {
                         break;
                     }
                 }
+                for(let i = 0; i < news_ID.length; i++) {
+                    if(transcript.includes(news_ID[i].toString())) {
+                        navigate(`/new/${news_ID[i]}`)
+                        recognition.stop();
+                        break;
+                    }
+                }
                 // Cuộn xuống và lên một đoạn 
                 if (checkTranscript(transcript, "xuống", 1)) {
                         window.scrollBy({
@@ -99,10 +106,12 @@ const NewsVC = () => {
             recognitionRef.current = null;
         }
         };
-    }, [isDemanded, isEnded])
+    }, [isDemanded, isEnded, news_ID])
     // --- end voice control code
     return (
-        <MicStatus isListening={isListening} />
+        <div>
+            <MicStatus isListening={isListening} />
+        </div>
     )
 }
 
