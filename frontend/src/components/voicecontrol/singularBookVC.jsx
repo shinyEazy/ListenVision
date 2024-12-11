@@ -56,6 +56,14 @@ const SingularBookVC = ({audioRef}) => {
                         recognition.stop();
                     }
                 }
+                if(transcript.includes("tua")) {
+                    audioRef.current.currentTime = Math.min(audioRef.current.currentTime + 15, audioRef.current.duration);
+                    recognition.stop();
+                }
+                if(transcript.includes('lùi')) {
+                    audioRef.current.currentTime = Math.max(audioRef.current.currentTime - 15, 0);
+                    recognition.stop()
+                }
                 // Cuộn xuống và lên một đoạn 
                 if (checkTranscript(transcript, "xuống", 1)) {
                     window.scrollBy({

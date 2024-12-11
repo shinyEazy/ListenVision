@@ -70,6 +70,14 @@ const SingularNewVC = ({audioRef}) => {
                     });
                     recognition.stop();
                 }
+                if(transcript.includes("tua")) {
+                    audioRef.current.currentTime = Math.min(audioRef.current.currentTime + 15, audioRef.current.duration);
+                    recognition.stop();
+                }
+                if(transcript.includes('lùi')) {
+                    audioRef.current.currentTime = Math.max(audioRef.current.currentTime - 15, 0);
+                    recognition.stop()
+                }
                 // Cuộn đến đầu trang và cuối trang
                 if (checkTranscript(transcript, "đầu trang", 2)) {
                     window.scrollTo({
