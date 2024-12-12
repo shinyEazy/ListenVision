@@ -90,7 +90,7 @@ const BooksVC = () => {
                         break;
                     }
                     */
-                   if(transcript.includes(book_ids[i].toString()) || transcript.includes(book_id_string_arr[i].toString())) {
+                   if(checkTranscript(transcript, book_ids[i].toString(), 1) || checkTranscript(transcript, book_id_string_arr[i].toString(), 1) ) {
                         navigate(`/book/${book_ids[i]}`)
                         recognition.stop();
                         break;
