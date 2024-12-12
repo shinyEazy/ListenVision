@@ -1,7 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
+import isDemandedReducer from './slices/isDemandedSlice'
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    isDemanded: isDemandedReducer,
+  },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,

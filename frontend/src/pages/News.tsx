@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import NewsVC from "components/voicecontrol/newsVC";
 
 interface NewsItem {
   id: number;
@@ -23,6 +24,7 @@ const News = () => {
 
   const navigate = useNavigate();
   const [newsData, setNewsData] = useState<NewsItem[]>([]);
+  const [news_ID, setNewsID] = useState<number[]>([])
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -32,12 +34,25 @@ const News = () => {
           throw new Error("Failed to fetch news");
         }
         const data = await response.json();
+        //
+        const categories = ['Thời sự', 'Thế giới', 'Kinh tế'];
+        const all_news_id : number[] = []; 
+        categories.forEach((category) => {
+          const filteredNews = data
+            .filter((news: NewsItem) => news.category === category)
+            .sort((a: NewsItem, b: NewsItem) => b.id - a.id)
+            .slice(0, 4);
+          filteredNews.forEach((filtered_new: NewsItem) => {
+            all_news_id.push(filtered_new.id);
+          })
+        });
+        setNewsID(all_news_id)
+        //
         setNewsData(data);
       } catch (error) {
         console.error("Error fetching news:", error);
       }
     };
-
     fetchNews();
   }, []);
 
@@ -144,6 +159,7 @@ const News = () => {
                   Nghe
                 </Button>
               </Box>
+              <div>ID: {news.id}</div>
             </Card>
           ))}
         </Box>
@@ -165,6 +181,7 @@ const News = () => {
       {["Thời sự", "Thế giới", "Kinh tế"].map((category) => (
         <Box key={category}>{renderNewsByCategory(category)}</Box>
       ))}
+      <NewsVC news_ID={news_ID}/>
       <Footer />
     </Box>
   );

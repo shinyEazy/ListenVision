@@ -17,6 +17,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import NewCategoryVC from "components/voicecontrol/newCategoryVC";
 
 interface NewsItem {
   id: number;
@@ -32,6 +33,7 @@ const NewList = () => {
     categoryName: string;
     page: string;
   }>();
+  const [newListID, setNewListID] = useState<number[]>([]);
   const [newsList, setNewsList] = useState<NewsItem[]>([]);
   const [newestNews, setNewestNews] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -73,8 +75,14 @@ const NewList = () => {
 
         const sortedNews = filteredNews.sort((a, b) => b.id - a.id);
         setNewestNews(sortedNews.slice(0, 4));
-
         setNewsList(filteredNews);
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const tmp_arr = filteredNews.slice(startIndex, startIndex + itemsPerPage);
+        let tmp_arr_2 = [];
+        for(let i = 0 ; i< tmp_arr.length; i++) {
+          tmp_arr_2.push(tmp_arr[i].id);
+        }
+        setNewListID(tmp_arr_2);
       } catch (error) {
         console.error("Error fetching news:", error);
       } finally {
@@ -83,7 +91,7 @@ const NewList = () => {
     };
 
     fetchNews();
-  }, [categoryName]);
+  }, [categoryName, page]);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentNews = newsList.slice(startIndex, startIndex + itemsPerPage);
@@ -238,6 +246,7 @@ const NewList = () => {
                               >
                                 {truncateText(newsItem.content, 30)}
                               </Typography>
+                              <div style={{marginTop: "10px", fontWeight: "bold"}}>ID: {newsItem.id}</div>
                             </Box>
                           </CardContent>
                         </CardActionArea>
@@ -414,6 +423,7 @@ const NewList = () => {
             </Stack>
           </Grid>
         </Grid>
+        <NewCategoryVC new_ids={newListID} category_name={categoryName}/>
       </Box>
       <Footer />
     </Box>

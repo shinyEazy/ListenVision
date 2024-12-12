@@ -11,6 +11,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import BookCategoryVC from "components/voicecontrol/bookCategoryVC";
 
 interface BooksItem {
   id: number;
@@ -22,6 +23,7 @@ interface BooksItem {
 }
 
 const BookList = () => {
+  const [bookCategoryIds, setBookCategoryIds] = useState<number[]>([]);
   const { categoryName } = useParams<{
     categoryName: string;
   }>();
@@ -52,7 +54,11 @@ const BookList = () => {
               .normalize("NFD")
               .replace(/[\u0300-\u036f]/g, "") === formattedCategoryName
         );
-
+        const tmp_arr = [];
+        for(let i = 0; i<filteredBooks.length; i++) {
+          tmp_arr.push(filteredBooks[i].id);
+        }
+        setBookCategoryIds(tmp_arr);
         setBooksList(filteredBooks);
       } catch (error) {
         console.error("Error fetching books:", error);
@@ -63,6 +69,7 @@ const BookList = () => {
 
     fetchBooks();
   }, [categoryName]);
+
 
   return (
     <Box>
@@ -203,6 +210,9 @@ const BookList = () => {
                             Nghe
                           </Button>
                         </Box>
+                        <div>
+                            ID: {book.id}
+                        </div>
                       </Card>
                     </Grid>
                   ))}
@@ -210,6 +220,7 @@ const BookList = () => {
             </>
           )}
         </Box>
+        <BookCategoryVC book_by_category_ids={bookCategoryIds}/>
       </Box>
       <Footer />
     </Box>

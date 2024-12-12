@@ -7,9 +7,10 @@ import {
   CardMedia,
   CardContent,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import SingularNewVC from "components/voicecontrol/singularNewVC";
 
 interface NewData {
   id: number;
@@ -22,10 +23,12 @@ interface NewData {
 }
 
 const New = () => {
+  
   const { id } = useParams<{ id: string }>();
   const [newData, setNewData] = useState<NewData | null>(null);
   const [relatedNews, setRelatedNews] = useState<NewData[]>([]);
   const [loading, setLoading] = useState(true);
+  const audioRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,7 +79,6 @@ const New = () => {
         Article not found.
       </Typography>
     );
-
   const paragraphs = newData.content
     .split("\n")
     .filter((paragraph) => paragraph.trim() !== "");
@@ -137,7 +139,8 @@ const New = () => {
             marginBottom: "10px",
           }}
         >
-          <audio controls style={{ width: "100%" }}>
+          {/*sound here */}
+          <audio ref={audioRef} controls style={{ width: "100%" }}>
             <source src={newData.url} type="audio/mpeg" />
             Your browser does not support the audio element.
           </audio>
@@ -219,6 +222,7 @@ const New = () => {
               </Card>
             ))}
           </Box>
+          <SingularNewVC audioRef={audioRef}/>
         </Box>
       )}
       <Footer />
